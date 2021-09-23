@@ -1,0 +1,61 @@
+.bottomright {
+    position: fixed;
+    bottom: 30vh;
+    right: 5px;
+    width: 30vw;
+    height: 25vh;
+}
+
+.faucet-main {
+    border: 1px solid orange;
+    border-radius: 20px;
+    background-color: orange;
+    height: 100%;
+    box-shadow: rgba(0, 0, 0, 0.25) 0px 54px 55px, 
+                rgba(0, 0, 0, 0.12) 0px -12px 30px, 
+                rgba(0, 0, 0, 0.12) 0px 4px 6px, 
+                rgba(0, 0, 0, 0.17) 0px 12px 13px, 
+                rgba(0, 0, 0, 0.09) 0px -3px 5px;
+}
+
+.closed-faucet {
+    height: 100%;
+    width: 100%;
+    font-weight: bold;
+    font-size: small;
+    writing-mode: vertical-rl;
+    text-orientation: upright;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.closed-faucet:hover {
+    cursor: pointer;
+}
+
+.close-button {
+    color: purple;
+    border-radius: 60%;
+    box-shadow: rgba(0, 0, 0, 0.25) 0px 54px 55px, 
+                rgba(0, 0, 0, 0.12) 0px -12px 30px, 
+                rgba(0, 0, 0, 0.12) 0px 4px 6px, 
+                rgba(0, 0, 0, 0.17) 0px 12px 13px, 
+                rgba(0, 0, 0, 0.09) 0px -3px 5px;
+}
+
+.bord {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+
+    div {
+        font-size: large;
+        margin: 10px;
+    }
+}
+
+fa-icon:hover {
+    cursor: pointer;
+}

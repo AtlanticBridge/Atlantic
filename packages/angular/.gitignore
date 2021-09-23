@@ -1,0 +1,4 @@
+# CLIENT IGNORED FILES
+node_modules/
+package-lock.json
+src/app/artifacts/abis/*

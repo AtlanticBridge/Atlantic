@@ -1,0 +1,4 @@
+node_modules
+.vscode
+/packages/angular/src/environments/*
+/packages/angular/src/app/artifacts/*

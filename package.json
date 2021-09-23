@@ -1,0 +1,21 @@
+{
+  "name": "@ang-truff-eth/monolib",
+  "version": "1.0.0",
+  "keywords": [
+    "ethereum",
+    "angular",
+    "workspaces"
+  ],
+  "private": true,
+  "scripts": {
+    "angular-app:install": "cd packages/angular && npm install",
+    "angular-app:build": "npm build --workspace=@ang-truff-eth/angular",
+    "angular-app:start": "npm start --workspace=@ang-truff-eth/angular",
+    "angular-app:test": "npm test --workspace=@ang-truff-eth/angular",
+    "truffle:fork-mainnet": "npm run fork:mainnet --workspace=@ang-truff-eth/truffle",
+    "truffle:deploy-dev": "npm run deploy:dev --workspace=@ang-truff-eth/truffle"
+  },
+  "workspaces": [
+    "packages/*"
+  ]
+}

@@ -1,0 +1,5 @@
+build/*
+node_modules/
+.env
+.vscode
+accounts/ganache_cli_mainnet_keys.json

@@ -1,0 +1,29 @@
+.bottomright {
+    position: fixed;
+    bottom: 0px;
+    right: 0px;
+    width: 30vw;
+}
+
+.bord {
+    display: flex;
+    justify-content: flex-end;
+}
+
+.demo {
+    display: flex;
+    justify-content: flex-start;
+    align-items: baseline;
+    background-color: orange;
+    // padding: 20px;
+    margin-bottom: 20px;
+    width: 90%;
+
+    mat-form-field {
+        cursor: pointer;
+    }
+}
+
+fa-icon:hover {
+    cursor: pointer;
+}

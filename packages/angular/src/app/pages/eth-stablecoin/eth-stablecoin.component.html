@@ -1,0 +1,131 @@
+<div class="eth-stablecoin-grid">
+
+    <div class="grid-inputs">
+        <div style="display: flex; justify-content: center; align-items: flex-start;">
+            <mat-card style="height: auto; width: 1052px; margin: 1rem; background-color: slateblue; color: black;">
+                <mat-card-title style="display: flex; justify-content: center;">
+                    <h1>
+                        {{contractName}}
+                    </h1>
+                </mat-card-title>
+            </mat-card>
+        </div>
+    
+        <div style="display: flex; justify-content: center; align-items: flex-start; flex-direction: row; flex-wrap: wrap;">
+    
+            <mat-card style="height: auto; width: 500px; margin: 10px">
+                <mat-card-title>Deposit</mat-card-title>
+                <hr>
+                <form>
+                    <div style="display: flex; justify-content: space-between; align-items: baseline;">
+                        <mat-form-field appearance="outline" style="width: 20vw;">
+                            <input matInput placeholder="amount to deposit">
+                        </mat-form-field>
+                        <button mat-raised-button color="accent">Submit</button>
+                    </div>
+                </form>
+            </mat-card>
+            <!--
+                
+            -->
+            <mat-card style="height: auto; width: 500px; margin: 10px">
+                <mat-card-title>Withdraw</mat-card-title>
+                <hr>
+                <form>
+                    <div style="display: flex; justify-content: space-between; align-items: baseline;">
+                        <mat-form-field appearance="outline" style="width: 20vw;">
+                            <input matInput placeholder="amount to withdraw">
+                        </mat-form-field>
+                        <button mat-raised-button color="accent">Submit</button>
+                    </div>
+                </form>
+            </mat-card>
+    
+            <br>
+    
+        </div>
+    
+        <div style="display: flex; justify-content: center; align-items: flex-start; flex-wrap: wrap;">
+            <mat-card style="height: auto; width: 1052px; margin: 1rem; background-color: slateblue; color: black;">
+                <mat-card-title>
+                    <h1>
+                        Standard ERC20 Function Calls
+                    </h1>
+                </mat-card-title>
+    
+                <form [formGroup]="balanceOfForm">
+                    <h2>balanceOf</h2>
+                    <div style="display: flex; justify-content: space-between; align-items: baseline;">
+                        <mat-form-field appearance="outline" style="width: 40vw;">
+                            <input matInput formControlName="balanceOfAddress" placeholder="balance of address">
+                        </mat-form-field>
+                        <button mat-raised-button color="accent" [disabled]="balanceOfForm.invalid" (click)="getBalanceOf()">Get Balance</button>
+                    </div>
+                </form>
+    
+                <form>
+                    <h2>Send Tokens</h2>
+                    <div style="display: flex; justify-content: space-between; align-items: baseline;">
+                        <div>
+                            <mat-form-field appearance="outline" style="width: 19vw; padding-right: 1vw;">
+                                <input matInput placeholder="to address">
+                            </mat-form-field>
+                            <mat-form-field appearance="outline" style="width: 19vw; padding-left: 1vw;">
+                                <input matInput placeholder="amount to transfer">
+                            </mat-form-field>
+                        </div>
+                        
+                        <button mat-raised-button color="accent">Transfer</button>
+                    </div>
+                </form>
+    
+                <form>
+                    <h2>balanceOf</h2>
+                    <div style="display: flex; justify-content: space-between; align-items: baseline;">
+                        <mat-form-field appearance="outline" style="width: 40vw;">
+                            <input matInput placeholder="amount to withdraw">
+                        </mat-form-field>
+                        <button mat-raised-button color="accent">Submit</button>
+                    </div>
+                </form>
+    
+                <form>
+                    <h2>balanceOf</h2>
+                    <div style="display: flex; justify-content: space-between; align-items: baseline;">
+                        <mat-form-field appearance="outline" style="width: 40vw;">
+                            <input matInput placeholder="amount to withdraw">
+                        </mat-form-field>
+                        <button mat-raised-button color="accent" (click)="getBalanceOf()">Submit</button>
+                    </div>
+                </form>
+            </mat-card>
+        </div>
+    </div>
+
+    <!--
+        --- GRID RESULTS ---
+    -->
+    <div class="grid-results">
+        <h1>Data Results</h1>
+
+        <mat-card>
+            Amount Deposited: {{balanceOf}}
+        </mat-card>
+
+        <mat-card>
+            Amount Withdrawn: {{balanceOf}}
+        </mat-card>
+
+        <mat-card style="background-color: slateblue;">
+            balanceOf [dETH]: {{balanceOf}}
+        </mat-card>
+
+        <mat-card style="background-color: slateblue;">
+            Tokens Sent [dETH]: {{balanceOf}}
+        </mat-card>
+
+        
+    </div>
+    
+    
+</div>

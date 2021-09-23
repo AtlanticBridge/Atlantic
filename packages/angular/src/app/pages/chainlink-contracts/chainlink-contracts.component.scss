@@ -1,0 +1,39 @@
+.chainlink-page {
+    display: grid;
+    height: 100%;
+    grid-template-rows: 50% auto;
+    grid-template-columns: 70% auto;
+    grid-template-areas: "top    pricefeed"
+                         "bottom pricefeed";
+}
+
+.top-page {
+    grid-area: top;
+    background-color: tomato;
+    margin-left: 2%;
+    margin-top: 2%;
+    margin-bottom: 1%;
+    margin-right: 2%;
+}
+
+.bottom-page {
+    grid-area: bottom;
+    background-color: seagreen;
+    margin-left: 2%;
+    margin-bottom: 2%;
+    margin-top: 1%;
+    margin-right: 2%;
+}
+
+.pricefeed-page {
+    grid-area: pricefeed;
+    background-color: royalblue;
+    // margin: 4.5%;
+
+    .pricefeed-table {
+        margin: 5%;
+        font-family: arial, sans-serif;
+        border-collapse: collapse;
+        width: 100%;
+    }
+}

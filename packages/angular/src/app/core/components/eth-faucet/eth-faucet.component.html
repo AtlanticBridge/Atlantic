@@ -1,0 +1,19 @@
+<div class="bottomright" [@slideInOut]="stateSlider" >
+  <div class="faucet-main">
+    <div *ngIf="closed" (click)="touchSlider()" class="closed-faucet">
+      Faucet
+    </div>
+    <div *ngIf="!closed">
+      <fa-icon [icon]="faTimesCircle" size='lg' class="close-button" (click)="touchSlider()"></fa-icon>
+    </div>
+    <div *ngIf="!closed" class="bord">
+      <div>ETH Faucet</div>
+      <mat-form-field>
+        <input matInput placeholder="address">
+      </mat-form-field>
+      <button mat-raised-button>Get ETH</button>
+    </div>
+  </div>
+
+    
+</div>
