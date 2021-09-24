@@ -43,3 +43,12 @@ required to ensure Angular knows (1) where the node_modules directory and packag
 
 These should come pre-fixed when you clone this repo, but in case you have any problems, you need to make sure that your **"$schema"** path is in the correct location, that your CSS **"styles"** have the correct 
 directory path, and that your **"root"** directory is from *packages/angular*.
+
+#### UPDATE: Crypto Change
+***UPDATE***
+
+You no longer need to change the browser.js Angular devkit file. 
+
+However, when launching the Angular application, if you receive an error ***System limit for number of file watchers reached***, run the following command in your console window: `echo fs.inotify.max_user_watches=524288 | sudo tee -a /etc/sysctl.conf && sudo sysctl -p`.
+
+More details on this can be found here: https://github.com/guard/listen/blob/master/README.md

@@ -11,14 +11,14 @@ ccip-ea/.DS_Store
 ccip-ea/.env
 
 # Yarn 2
-ccip-ea/.yarn
-ccip-ea/.yarn/*
-ccip-ea/!.yarn/cache
-ccip-ea/!.yarn/patches
-ccip-ea/!.yarn/plugins
-ccip-ea/!.yarn/releases
-ccip-ea/!.yarn/sdks
-ccip-ea/!.yarn/versions
-ccip-ea/node_modules
-ccip-ea/*generated*
-ccip-ea/vendor
+.yarn
+.yarn/*
+!.yarn/cache
+!.yarn/patches
+!.yarn/plugins
+!.yarn/releases
+!.yarn/sdks
+!.yarn/versions
+node_modules
+*generated*
+vendor
