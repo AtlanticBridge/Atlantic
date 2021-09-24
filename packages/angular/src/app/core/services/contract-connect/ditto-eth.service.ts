@@ -11,7 +11,7 @@ export class DittoEthService {
     private dittoEthInjectable: DittoEthInjectable
   ) {
     // 42 is the Kovan Network
-    // 7776 is the Truffle Network
+    // 7776 is the Truffle Network 6A5ACD
   }
 
   async name(): Promise<string> {

@@ -1,0 +1,25 @@
+{
+    "name": "chainlinksolutions AVERAGE - GET > Bytes32",
+    "initiators": [
+        {
+            "type": "runlog",
+            "params": {
+                "address": "0xFA9E7d769870CEAa202C1090D80daF7CBd655F56"
+            }
+        }
+    ],
+    "tasks": [
+        {
+            "type": "chainlinksolutions"
+        },
+        {
+            "type": "multiply"
+        },
+        {
+            "type": "ethuint256"
+        },
+        {
+            "type": "ethtx"
+        }
+    ]
+}

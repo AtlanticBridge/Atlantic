@@ -1,0 +1,19 @@
+# Build artifacts
+packages/**/*.zip
+dist
+**/tsconfig.tsbuildinfo
+.DS_Store
+.env
+
+# Yarn 2
+.yarn
+.yarn/*
+!.yarn/cache
+!.yarn/patches
+!.yarn/plugins
+!.yarn/releases
+!.yarn/sdks
+!.yarn/versions
+node_modules
+*generated*
+vendor

@@ -1,0 +1,24 @@
+{
+  "files": [],
+  "include": [],
+  "references": [
+    {
+      "path": "./core/bootstrap"
+    },
+    {
+      "path": "./core/factories"
+    },
+    {
+      "path": "./core/reference-data-reader"
+    },
+    {
+      "path": "./core/test-helpers"
+    },
+    {
+      "path": "./sources/ccip"
+    },
+    {
+      "path": "./sources/chainlinksolutions"
+    }
+  ]
+}

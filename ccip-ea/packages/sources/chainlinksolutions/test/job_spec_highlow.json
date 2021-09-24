@@ -1,0 +1,24 @@
+{
+    "name": "chainlinksolutions HIGHLOW TEST",
+    "initiators": [
+        {
+            "type": "web"
+        }
+    ],
+    "tasks": [
+        {
+            "type": "chainlinksolutions",
+            "params": {
+                "endpoint": "highlow",
+                "highlow": "high"
+            }
+        },
+        {
+            "type": "chainlinksolutions",
+            "params": {
+                "endpoint": "highlow",
+                "highlow": "low"
+            }
+        }
+    ]  
+}
