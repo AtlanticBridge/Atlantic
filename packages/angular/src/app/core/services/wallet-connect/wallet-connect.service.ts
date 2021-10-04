@@ -17,8 +17,6 @@ declare var process : {
   }
 }
 
-require("dotenv").config()
-
 @Injectable({
   providedIn: 'root'
 })

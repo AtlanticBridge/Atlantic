@@ -1,7 +1,7 @@
 // SPDX-License-Identifier: MIT
-pragma solidity ^0.7.0;
+pragma solidity ^0.6.0;
 
-import "@chainlink/contracts/src/v0.7/interfaces/AggregatorV3Interface.sol";
+import "@chainlink/contracts/src/v0.6/interfaces/AggregatorV3Interface.sol";
 
 /**
     AAVE / ETH	        0xd04647B7CB523bb9f26730E9B6dE1174db7591Ad
@@ -66,7 +66,7 @@ contract PricefeedsKovan {
     AggregatorV3Interface internal ethPriceFeed_USD;
     AggregatorV3Interface internal linkPriceFeed_USD;
 
-    constructor() {
+    constructor() public {
         ethPriceFeed_USD = AggregatorV3Interface(0x9326BFA02ADD2366b30bacB125260Af641031331);
         linkPriceFeed_USD = AggregatorV3Interface(0x396c5E36DD0a0F5a5D33dae44368D4193f69a1F0);
     }

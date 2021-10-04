@@ -1,21 +1,16 @@
-FROM node:14 as builder
-ARG location
-ARG package
+FROM node:12-alpine
+
+RUN mkdir -p /home/node/app/node_modules && chown -R node:node /home/node/app
+
 WORKDIR /home/node/app
 
-COPY . .
-RUN yarn
-RUN yarn workspace $package build
-RUN yarn bundle $location -o $location/bundle
+COPY package.json ./
+COPY yarn.lock ./
 
-FROM node:14-alpine
-ARG location
+USER node
 
-EXPOSE 8080
-WORKDIR /home/node/app
+RUN yarn --frozen-lockfile
 
-COPY --from=builder /home/node/app/$location/bundle ./
-# Wildcards are included to handle cases where this file doesnt exist
-COPY --from=builder /home/node/app/$location/package.json /home/node/app/$location/*test-payload.json*  ./
+COPY --chown=node:node . .
 
-CMD ["yarn", "server"]
+CMD [ "node", "app.js" ]

@@ -1,5 +1,5 @@
 // SPDX-License-Identifier: MIT
-pragma solidity ^0.7.0;
+pragma solidity ^0.6.0;
 
 /**
     AUD / USD	    0x21c095d2aDa464A294956eA058077F14F66535af

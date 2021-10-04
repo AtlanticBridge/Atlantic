@@ -1,5 +1,5 @@
 // SPDX-License-Identifier: MIT
-pragma solidity ^0.7.0;
+pragma solidity ^0.6.0;
 
 import "@openzeppelin/contracts/token/ERC20/ERC20.sol";
 import "@openzeppelin/contracts/token/ERC20/ERC20Burnable.sol";
@@ -17,7 +17,7 @@ contract DittoEth is ERC20, ERC20Burnable {
 
     receive() external payable {}
 
-    constructor() ERC20("DittoEth", "dEth") {
+    constructor() ERC20("DittoEth", "dEth") public {
         owner = msg.sender;
         // _mint(owner,1000);
     }

@@ -1,0 +1,23 @@
+{
+    "name": "ccip_job",
+    "initiators": [
+      {
+        "id": 21,
+        "jobSpecId": "740306a4-d92d-4ab1-ad07-f033183a5975",
+        "type": "runlog",
+        "params": {
+          "address": "0xfa9e7d769870ceaa202c1090d80daf7cbd655f56"
+        }
+      }
+    ],
+    "tasks": [
+      {
+        "jobSpecId": "740306a4d92d4ab1ad07f033183a5975",
+        "type": "chainlinksolutions"
+      },
+      {
+        "jobSpecId": "740306a4d92d4ab1ad07f033183a5975",
+        "type": "ethtx"
+      }
+    ]
+  }
