@@ -2,7 +2,7 @@ const { Validator } = require('@chainlink/external-adapter')
 
 const { Binance } = require('./endpoint/binance')
 
-const axios = require('axios')
+// const axios = require('axios')
 
 // var Web3 = require('web3')
 // const { Requester, Validator } = require('@chainlink/external-adapter')
@@ -47,8 +47,10 @@ const createRequest = (input, callback) => {
 
   var binance = new Binance()
   const endpoint = input.data.endpoint || 'binance'
-  const jobRunID = input.id
+  // const jobRunID = input.id
   const message = input.data.message
+
+  const m = Buffer.from(input.data.message, 'hex').toString()
 
   // Get Data
 
@@ -59,7 +61,7 @@ const createRequest = (input, callback) => {
 
       break
     case 'binance':
-      binance.sendData(message)
+      binance.sendData(message || m)
 
       break
     default:
@@ -71,12 +73,13 @@ const createRequest = (input, callback) => {
   console.log('The Validator: ', validator)
 
   var resp = {
-    '1',
-    data: 
+    key: '1',
+    data: input.id
   }
 
   // If successfull
-  callback(400, Requester.success(jobRunID, response))
+  callback(400, resp)
+  // callback(400, Requester.success(jobRunID, response))
   // const chainId = validator.validated.data.chainId || ''
   // const chainId = validator.validated.data.address || ''
   // const chainId = validator.validated.data.method || ''

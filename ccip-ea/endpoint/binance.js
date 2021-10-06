@@ -18,7 +18,7 @@ class Binance {
   }
 
   async sendData (senddata) {
-    const tx = bridgeBsc.methods.sendData(senddata)
+    const tx = bridgeBsc.methods.receiveFromRemoteChain(senddata.functionName, senddata.amount)
 
     const [gasPrice, gasCost] = await Promise.all([
       web3Bsc.eth.getGasPrice(),
