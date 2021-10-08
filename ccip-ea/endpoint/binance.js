@@ -3,12 +3,13 @@ var Web3 = require('web3')
 require('dotenv').config()
 
 const receiveMessage = require('../abi/ReceiveMessage.json')
+const bscContractInfo = require('../../packages/truffle/outputs/6_bsc-testnet_ccip.json')
 
 const web3Bsc = new Web3('https://data-seed-prebsc-1-s1.binance.org:8545')
 
 const bridgeBsc = new web3Bsc.eth.Contract(
   receiveMessage.abi,
-  '0xEaed3B434d0FFf6D6d7AA80D72a3B47dD86A3617'
+  bscContractInfo.receiveMessage
 )
 
 const { address: admin } = web3Bsc.eth.accounts.wallet.add(process.env.BSC_TESTNET_PRIVATE_KEY)
@@ -35,15 +36,6 @@ class Binance {
     var _method = senddata.method
     var _callback = '0x'.concat(senddata.callback)
 
-    // console.log('-------------------------------')
-    // console.log(_id)
-    // console.log(_amount)
-    // console.log(web3Bsc.utils.isAddress(_destination))
-    // console.log(_method)
-    // console.log(web3Bsc.utils.isAddress(_callback))
-    // console.log('\t Creating Transaction...')
-    // console.log('-------------------------------')
-    // const m = Buffer.from(input.data.message, 'hex').toString()
     const tx = bridgeBsc.methods.receiveFromRemoteChain(_method, _callback, _amount, _destination, _id)
 
     console.log('...creating promise')
@@ -65,7 +57,7 @@ class Binance {
     console.log('\t Sending Transaction to Binance Testnet...')
     console.log('--------------------------------------------------')
     const receipt = await web3Bsc.eth.sendTransaction(txData)
-    // console.log(`Transaction hash: ${receipt.transactionHash}`)
+    console.log(`Transaction hash: ${receipt.transactionHash}`)
     console.log(`
       Processed transfer:
         -   from: ${receipt.from}
