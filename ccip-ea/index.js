@@ -1,4 +1,4 @@
-const { Validator } = require('@chainlink/external-adapter')
+// const { Validator } = require('@chainlink/external-adapter')
 
 const { Binance } = require('./endpoint/binance')
 
@@ -31,103 +31,47 @@ struct Message {
 }
 
 */
-const customParams = {
-  chainId: false,
-  address: false,
-  method: false,
-  callback: false,
-  amount: false
-}
+// const customParams = {
+//   chainId: false,
+//   address: false,
+//   method: false,
+//   callback: false,
+//   amount: false
+// }
 
-const createRequest = (input, callback) => {
+const createRequest = async (input, callback) => {
   console.log('The Incoming Data: ', input)
   // console.log("callback is this! ", callback)
 
   // var buffer = ArrayBuffer(input.key.length)
 
-  var binance = new Binance()
-  const endpoint = input.data.endpoint || 'binance'
-  // const jobRunID = input.id
-  const message = input.data.message
+  // var data = {
+  //   _id: input.data.
+  //   _address: input.data.address,
+  //   _amount: input.data.amount,
+  //   _chainId: input.data.chainId,
+  //   _destination: input.data.destination,
+  //   _method: input.data.method
+  // }
 
-  const m = Buffer.from(input.data.message, 'hex').toString()
+  var binance = new Binance()
 
   // Get Data
 
   // eslint-disable-next-line no-undef
-  switch (endpoint) {
+  switch (input.data.chainId) {
     case 'ethereum':
       console.log('run ethereum')
-
       break
     case 'binance':
-      binance.sendData(message || m)
-
-      break
+      var id = await binance.sendData(input.data)
+      var dat = {
+        data: { payload: id }
+      }
+      return callback(400, dat)
     default:
       throw new Error('no valid chain id')
   }
-
-  const validator = new Validator(callback, input, customParams)
-
-  console.log('The Validator: ', validator)
-
-  var resp = {
-    key: '1',
-    data: input.id
-  }
-
-  // If successfull
-  callback(400, resp)
-  // callback(400, Requester.success(jobRunID, response))
-  // const chainId = validator.validated.data.chainId || ''
-  // const chainId = validator.validated.data.address || ''
-  // const chainId = validator.validated.data.method || ''
-  // const chainId = validator.validated.data.callback || ''
-  // const chainId = validator.validated.data.amount || ''
-
-  // const chainId =
-  // // The Validator helps you validate the Chainlink request data
-  // const validator = new Validator(callback, input, customParams)
-  // const jobRunID = validator.validated.id
-  // const endpoint = validator.validated.data.endpoint || 'price'
-  // const url = `https://min-api.cryptocompare.com/data/${endpoint}`
-  // const fsym = validator.validated.data.base.toUpperCase()
-  // const tsyms = validator.validated.data.quote.toUpperCase()
-
-  // const params = {
-  //   fsym,
-  //   tsyms
-  // }
-
-  // // This is where you would add method and headers
-  // // you can add method like GET or POST and add it to the config
-  // // The default is GET requests
-  // // method = 'get'
-  // // headers = 'headers.....'
-  // const config = {
-  //   url,
-  //   params
-  // }
-
-  // // The Requester allows API calls be retry in case of timeout
-  // // or connection failure
-  // Requester.request(config, customError)
-  //   .then(response => {
-
-  //     // ----------------------------------------------
-  //     var s = Uint8Array();
-  //     // ----------------------------------------------
-
-  //     // It's common practice to store the desired value at the top-level
-  //     // result key. This allows different adapters to be compatible with
-  //     // one another.
-  //     response.data.result = Requester.validateResultNumber(response.data, [tsyms])
-  //     callback(response.status, Requester.success(jobRunID, response))
-  //   })
-  //   .catch(error => {
-  //     callback(500, Requester.errored(jobRunID, error))
-  //   })
 }
 
 // This is a wrapper to allow the function to work with

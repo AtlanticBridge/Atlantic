@@ -56,6 +56,9 @@ contract FunctionCallerV3 is ChainlinkClient, Math {
    * @param _amount The transfer amount
    * @param _destination The call destination
    * @return id The id
+   *
+   * Example)
+   * "executeFunction","0xCb968FC92C735575941558A655a94895d743E34a",24,"0xEaed3B434d0FFf6D6d7AA80D72a3B47dD86A3617"
    */
     function initializeMessage(
         string calldata _method,
@@ -75,6 +78,18 @@ contract FunctionCallerV3 is ChainlinkClient, Math {
         message.destination = _destination;
         messages[id] = message;
         return id;
+    }
+
+    function getMessage(uint64 id) public view returns (address) {
+        Message memory message = messages[id];
+
+        return message.destination;
+    }
+    
+    function getMessageOwner(uint64 id) public view returns (address) {
+        address messageOwner = messageOwners[id];
+
+        return messageOwner;
     }
 
     /**
@@ -152,7 +167,7 @@ contract FunctionCallerV3 is ChainlinkClient, Math {
         message.buf.endSequence();
     }
 
-    function callFunction(uint64 _id, string calldata _chainId) external {
+    function callFunction(uint64 _id, string memory _chainId) public {
         require(messageOwners[_id] == msg.sender, "Only the originator of the message can call a function with it.");
         Message memory message = messages[_id];
         sendToRemoteChain(_chainId, message);

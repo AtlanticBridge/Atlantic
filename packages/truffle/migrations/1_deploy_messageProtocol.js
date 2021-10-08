@@ -53,7 +53,7 @@ module.exports = async function(deployer, network, accounts) {
         ================================================
         */
 
-        await deployer.deploy(FunctionCallerV3, OracleInstance.address);
+        await deployer.deploy(FunctionCallerV3, OracleContract.address);
 
         console.log('---------------------------------')
         console.log('FunctionCaller Address: ')
