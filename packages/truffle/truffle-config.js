@@ -27,13 +27,27 @@ module.exports = {
         return new HDWalletProvider(process.env.KOVAN_PRIVATE_KEY, process.env.KOVAN_HTTP_URL)
      },
      network_id: 42,
-     gasPrice: 20000000000, // 20 GWEI
-     gas: 3716887,          // gas limit, set any number you want,
+     gasPrice: 100000000000, // 20 GWEI
+     gas: 4712388,          // gas limit, set any number you want,
      skipDryRun: true
-   }
+   },
+   bsc_testnet: {
+    provider: () => new HDWalletProvider(process.env.BSC_TESTNET_PRIVATE_KEY, `https://data-seed-prebsc-1-s1.binance.org:8545`),
+    network_id: 97,
+    confirmations: 10,
+    timeoutBlocks: 200,
+    skipDryRun: true
+  },
+  bsc: {
+    provider: () => new HDWalletProvider(process.env.BSC_PRIVATE_KEY, `https://bsc-dataseed1.binance.org`),
+    network_id: 56,
+    confirmations: 10,
+    timeoutBlocks: 200,
+    skipDryRun: true
+  },
   },
   // contracts_directory: './contracts',
-  contracts_build_directory: './client/src/app/artifacts/abis',
+  contracts_build_directory: '../angular/src/app/artifacts/abis',
   // Set default mocha options here, use special reporters etc.
   mocha: {
     timeout: 100000,
@@ -41,7 +55,7 @@ module.exports = {
   },
   compilers: {
     solc: {
-      version: "0.7.6",                                     // Fetch exact version from solc-bin (default: truffle's version)
+      version: "0.6.6",                                    // Fetch exact version from solc-bin (default: truffle's version)
       docker: false,                                        // Use "0.5.1" you've installed locally with docker (default: false)
       settings: {                                           // See the solidity docs for advice about optimization and evmVersion
        optimizer: {
