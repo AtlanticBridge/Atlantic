@@ -1,43 +1,41 @@
 <div class="atlantic-demo-grid">
 
     <div class="grid-inputs">
-        <mat-card *ngIf="showInitializeMessage" class="initialize-card">
-            <mat-card-title>Initialize message</mat-card-title>
-            <mat-card-content>
-                <form>
-                    <div class="input-form-container">
-                        <div class="input-element">
-                            <label for="initialize-method">Method: </label>
-                            <mat-form-field appearance="outline" style="width: 20vw;">
-                                <input matInput id="initialize-method" placeholder="enter a method name">
-                            </mat-form-field>
-                        </div>
-                        <div class="input-element">
-                            <label for="initialize-method">Callback: </label>
-                            <mat-form-field appearance="outline" style="width: 20vw;">
-                                <input matInput id="initialize-method" placeholder="the callback address">
-                            </mat-form-field>
-                        </div>
-                        <div class="input-element">
-                            <label for="initialize-method">Amount: </label>
-                            <mat-form-field appearance="outline" style="width: 20vw;">
-                                <input matInput id="initialize-method" placeholder="amount to transfer">
-                            </mat-form-field>
-                        </div>
-                        <div class="input-element">
-                            <label for="initialize-method">Destination: </label>
-                            <mat-form-field appearance="outline" style="width: 20vw;">
-                                <input matInput id="initialize-method" placeholder="the destination address">
-                            </mat-form-field>
-                        </div>
+        <mat-card *ngIf="showInitializeMessage" class="input-card">
+            <mat-card-title class="input-title">Initialize message</mat-card-title>
+            <form>
+                <div class="input-form-container">
+                    <div class="input-element">
+                        <label for="initialize-method">Method: </label>
+                        <mat-form-field appearance="outline" style="width: 20vw;">
+                            <input matInput id="initialize-method" placeholder="enter a method name">
+                        </mat-form-field>
                     </div>
-                    <button (click)="toggleBuildParameters()">Create message</button>
-                    <button (click)="backToStart()">Start again?</button>
-                </form>
-            </mat-card-content>
+                    <div class="input-element">
+                        <label for="initialize-method">Callback: </label>
+                        <mat-form-field appearance="outline" style="width: 20vw;">
+                            <input matInput id="initialize-method" placeholder="the callback address">
+                        </mat-form-field>
+                    </div>
+                    <div class="input-element">
+                        <label for="initialize-method">Amount: </label>
+                        <mat-form-field appearance="outline" style="width: 20vw;">
+                            <input matInput id="initialize-method" placeholder="amount to transfer">
+                        </mat-form-field>
+                    </div>
+                    <div class="input-element">
+                        <label for="initialize-method">Destination: </label>
+                        <mat-form-field appearance="outline" style="width: 20vw;">
+                            <input matInput id="initialize-method" placeholder="the destination address">
+                        </mat-form-field>
+                    </div>
+                </div>
+                <button (click)="toggleBuildParameters()">Create message</button>
+                <button (click)="backToStart()">Start again?</button>
+            </form>
         </mat-card>
-        <mat-card *ngIf="showBuildParameters" class="parameters-card">
-            <mat-card-title>Build parameters</mat-card-title>
+        <mat-card *ngIf="showBuildParameters" class="input-card">
+            <mat-card-title class="input-title">Build parameters</mat-card-title>
             <mat-card-content>
                 <form>
                     <mat-form-field appearance="outline" style="width: 20vw;">
@@ -48,8 +46,8 @@
                 </form>
             </mat-card-content>
         </mat-card>
-        <mat-card *ngIf="showCallFunction" class="call-function-card">
-            <mat-card-title>Call function</mat-card-title>
+        <mat-card *ngIf="showCallFunction" class="input-card">
+            <mat-card-title class="input-title">Call function</mat-card-title>
             <mat-card-content>
                 <form>
                     <mat-form-field appearance="outline" style="width: 20vw;">
@@ -60,8 +58,8 @@
                 </form>
             </mat-card-content>
         </mat-card>
-        <mat-card *ngIf="showSuccessCard" class="success-card">
-            <mat-card-title>Success!</mat-card-title>
+        <mat-card *ngIf="showSuccessCard" class="input-card">
+            <mat-card-title class="input-title">Success!</mat-card-title>
             <mat-card-content>
                 <form>
                     <mat-form-field appearance="outline" style="width: 20vw;">

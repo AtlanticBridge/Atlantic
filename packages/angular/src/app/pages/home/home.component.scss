@@ -13,17 +13,58 @@
 
 .grid-inputs {
     grid-area: inputs;
-    .initialize-card {
+    display: flex;
+    justify-content: center;
+    .input-card {
+        margin-top: 10%;
+        max-width: 700px;
+        width: 100%;
+        border-radius: 5px 5px 0 0;
+        box-shadow: 0 0 20px rgba(0, 0, 0, 0.15);
+        overflow: hidden;
+        background-color: #fff;
+        max-height: 600px;
+        padding: 0;
+        .input-title {
+            background-color: #009879;
+            color: #ffffff;
+            text-align: left;
+            padding: 12px 15px;
+        }
+        .input-card .input-title {
+            font-size: 25px;
+            font-weight: 500;
+            position: relative;
+        }
+        .input-card .input-title::before {
+            content: '';
+            position: absolute;
+            left: 0;
+            bottom: 0;
+            height: 3px;
+            width: 30px;
+            background: cornflowerblue;
+        }
         .input-form-container {
             display: flex;
             flex-direction: column;
+            margin-top: 20px;
+            .input-element {
+                margin: auto;
+                label {
+                    display: inline-block;
+                    width: 100px;
+                    min-width: 100px;
+                    font-weight: 500;
+                }
+            }
         }
     }
 }
 
 .grid-results {
     grid-area: results;
-    background-color: slateblue;
+    background-color: #009879;
     padding: 10%;
     // margin: 50px;
     // border: 4px solid orange;
