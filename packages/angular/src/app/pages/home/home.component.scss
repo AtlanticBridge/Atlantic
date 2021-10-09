@@ -25,6 +25,11 @@
         background-color: #fff;
         max-height: 600px;
         padding: 0;
+        .success-element {
+            max-width: 50%;
+            margin: auto;
+            text-align: center;
+        }
         .buttons {
             display: flex;
             justify-content: center;

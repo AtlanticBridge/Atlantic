@@ -81,14 +81,11 @@
         <mat-card *ngIf="showSuccessCard" class="input-card">
             <mat-card-title class="input-title">Success!</mat-card-title>
             <mat-card-content>
-                <form>
-                    <mat-form-field appearance="outline" style="width: 20vw;">
-                        <input matInput id="initialize-method" placeholder="enter a method name">
-                    </mat-form-field>
-                    <div class="buttons">
-                        <div class="input-button" (click)="backToStart()">Call another function?</div>
-                    </div>
-                </form>
+                <div class="success-element"><h2>Success, your message has been received on the Binance Smart Chain!</h2></div>
+                <div class="success-element"><img src="assets/success-icon.png"></div>
+                <div class="buttons">
+                    <div class="input-button" (click)="backToStart()">Call another function?</div>
+                </div>
             </mat-card-content>
         </mat-card>
     </div>
