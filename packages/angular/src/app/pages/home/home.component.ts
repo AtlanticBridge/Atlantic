@@ -1,4 +1,7 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Injectable, OnInit } from '@angular/core';
+
+import { FunctionCallerV3Injectable } from "../../core/injectables/contract-injectables/function-callerV3.injectable";
+import { ReceiveMessageInjectable } from "../../core/injectables/contract-injectables/receive-message.injectable";
 
 @Component({
   selector: 'app-home',
@@ -7,7 +10,9 @@ import { Component, OnInit } from '@angular/core';
 })
 export class HomeComponent implements OnInit {
 
-  constructor() { }
+  constructor(
+    private functionCallerV3Injectable: FunctionCallerV3Injectable
+  ) { }
 
   showInitializeMessage: boolean = true;
   showBuildParameters: boolean = false;
@@ -38,4 +43,11 @@ export class HomeComponent implements OnInit {
     this.showCallFunction = false;
     this.showSuccessCard = false;
   }
+
+
+  // ** BINANCE FUNCTIONS ** //
+
+
+  // ** ETHEREUM FUNCTIONS ** //
+
 }
