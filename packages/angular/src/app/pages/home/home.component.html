@@ -30,32 +30,52 @@
                         </mat-form-field>
                     </div>
                 </div>
-                <button (click)="toggleBuildParameters()">Create message</button>
-                <button (click)="backToStart()">Start again?</button>
+                <div class="buttons">
+                    <div class="input-button" (click)="toggleBuildParameters()">Create message</div>
+                    <div class="input-button" (click)="backToStart()">Start again?</div>
+                </div>
             </form>
         </mat-card>
         <mat-card *ngIf="showBuildParameters" class="input-card">
             <mat-card-title class="input-title">Build parameters</mat-card-title>
             <mat-card-content>
                 <form>
-                    <mat-form-field appearance="outline" style="width: 20vw;">
-                        <input matInput id="initialize-method" placeholder="enter a method name">
-                    </mat-form-field>
-                    <button (click)="toggleCallFunction()">Add parameters</button>
-                    <button (click)="backToStart()">Start again?</button>
+                    <div class="input-form-container">
+                        <div class="input-element" id="parameter-inputs">
+                            <h2>Parameter</h2>
+                            <h2>Value</h2>
+                        </div>
+                        <div class="input-element" id="parameter-inputs">
+                            <mat-form-field appearance="outline" style="width: 20vw;">
+                                <input matInput id="initialize-method" placeholder="Enter a paramater name">
+                            </mat-form-field>
+                            <mat-form-field appearance="outline" style="width: 20vw;">
+                                <input matInput id="initialize-method" placeholder="Enter a parameter value">
+                            </mat-form-field>
+                        </div>
+                        <div class="buttons">
+                            <div class="input-button" (click)="toggleCallFunction()">Add parameters</div>
+                            <div class="input-button" (click)="backToStart()">Start again?</div>
+                        </div>
+                    </div>
                 </form>
             </mat-card-content>
         </mat-card>
         <mat-card *ngIf="showCallFunction" class="input-card">
             <mat-card-title class="input-title">Call function</mat-card-title>
             <mat-card-content>
-                <form>
-                    <mat-form-field appearance="outline" style="width: 20vw;">
-                        <input matInput id="initialize-method" placeholder="enter a method name">
-                    </mat-form-field>
-                    <button (click)="toggleSuccessCard()">Call my function!</button>
-                    <button (click)="backToStart()">Start again?</button>
-                </form>
+                <div class="input-form-container">
+                    <div class="call-function-element">
+                        <p>Congratulations, you've built a message! Calling the callFunction method on the Atlantic smart contract 
+                        will send this to Binance Smart Chain, and use it to call the function you specified!</p>
+                    </div>
+                    <div class="call-function-element"><h2>Your message:</h2></div>
+                    <div class="call-function-element"><h3>Parameters:</h3></div>
+                    <div class="buttons">
+                        <div class="input-button" (click)="toggleSuccessCard()">Call my function!</div>
+                        <div class="input-button" (click)="backToStart()">Start again?</div>
+                    </div>
+                </div>
             </mat-card-content>
         </mat-card>
         <mat-card *ngIf="showSuccessCard" class="input-card">
@@ -65,7 +85,9 @@
                     <mat-form-field appearance="outline" style="width: 20vw;">
                         <input matInput id="initialize-method" placeholder="enter a method name">
                     </mat-form-field>
-                    <button (click)="backToStart()">Call another function?</button>
+                    <div class="buttons">
+                        <div class="input-button" (click)="backToStart()">Call another function?</div>
+                    </div>
                 </form>
             </mat-card-content>
         </mat-card>

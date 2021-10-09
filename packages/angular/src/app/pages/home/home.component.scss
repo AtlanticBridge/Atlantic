@@ -25,6 +25,22 @@
         background-color: #fff;
         max-height: 600px;
         padding: 0;
+        .buttons {
+            display: flex;
+            justify-content: center;
+            .input-button {
+                background-color: #009879;
+                min-width: 150px;
+                margin: 30px;
+                text-align: center;
+                padding: 10px;
+                color: #ffffff;
+                border-radius: 5px;
+            }
+            .input-button:hover {
+                cursor: pointer;
+            }
+        }
         .input-title {
             background-color: #009879;
             color: #ffffff;
@@ -56,6 +72,21 @@
                     width: 100px;
                     min-width: 100px;
                     font-weight: 500;
+                }
+            .call-function-element {
+                background-color: aqua;
+            }
+            }
+            #parameter-inputs.input-element {
+                display: inline-block;
+                mat-form-field {
+                    max-width: 250px;
+                    margin: 20px;
+                }
+                h2 {
+                    min-width: 250px;
+                    display: inline-block;
+                    text-align: center;
                 }
             }
         }
