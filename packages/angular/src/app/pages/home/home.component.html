@@ -1,1 +1,153 @@
-<p>home works!</p>
+<div class="atlantic-demo-grid">
+
+    <div class="grid-inputs">
+        <mat-card *ngIf="showInitializeMessage" class="input-card">
+            <mat-card-title class="input-title">Initialize message</mat-card-title>
+            <form>
+                <div class="input-form-container">
+                    <div class="input-element">
+                        <label for="initialize-method">Method: </label>
+                        <mat-form-field appearance="outline" style="width: 20vw;">
+                            <input matInput id="initialize-method" placeholder="enter a method name">
+                        </mat-form-field>
+                    </div>
+                    <div class="input-element">
+                        <label for="initialize-method">Callback: </label>
+                        <mat-form-field appearance="outline" style="width: 20vw;">
+                            <input matInput id="initialize-method" placeholder="the callback address">
+                        </mat-form-field>
+                    </div>
+                    <div class="input-element">
+                        <label for="initialize-method">Amount: </label>
+                        <mat-form-field appearance="outline" style="width: 20vw;">
+                            <input matInput id="initialize-method" placeholder="amount to transfer">
+                        </mat-form-field>
+                    </div>
+                    <div class="input-element">
+                        <label for="initialize-method">Destination: </label>
+                        <mat-form-field appearance="outline" style="width: 20vw;">
+                            <input matInput id="initialize-method" placeholder="the destination address">
+                        </mat-form-field>
+                    </div>
+                </div>
+                <div class="buttons">
+                    <div class="input-button" (click)="toggleBuildParameters()">Create message</div>
+                    <div class="input-button" (click)="backToStart()">Start again?</div>
+                </div>
+            </form>
+        </mat-card>
+        <mat-card *ngIf="showBuildParameters" class="input-card">
+            <mat-card-title class="input-title">Build parameters</mat-card-title>
+            <mat-card-content>
+                <form>
+                    <div class="input-form-container">
+                        <div class="input-element" id="parameter-inputs">
+                            <h2>Parameter</h2>
+                            <h2>Value</h2>
+                        </div>
+                        <div class="input-element" id="parameter-inputs">
+                            <mat-form-field appearance="outline" style="width: 20vw;">
+                                <input matInput id="initialize-method" placeholder="Enter a paramater name">
+                            </mat-form-field>
+                            <mat-form-field appearance="outline" style="width: 20vw;">
+                                <input matInput id="initialize-method" placeholder="Enter a parameter value">
+                            </mat-form-field>
+                        </div>
+                        <div class="input-element" id="parameter-inputs">
+                            <mat-form-field appearance="outline" style="width: 20vw;">
+                                <input matInput id="initialize-method" placeholder="Enter a paramater name">
+                            </mat-form-field>
+                            <mat-form-field appearance="outline" style="width: 20vw;">
+                                <input matInput id="initialize-method" placeholder="Enter a parameter value">
+                            </mat-form-field>
+                        </div>
+                        <div class="input-element" id="parameter-inputs">
+                            <mat-form-field appearance="outline" style="width: 20vw;">
+                                <input matInput id="initialize-method" placeholder="Enter a paramater name">
+                            </mat-form-field>
+                            <mat-form-field appearance="outline" style="width: 20vw;">
+                                <input matInput id="initialize-method" placeholder="Enter a parameter value">
+                            </mat-form-field>
+                        </div>
+                        <div class="input-element" id="parameter-inputs">
+                            <mat-form-field appearance="outline" style="width: 20vw;">
+                                <input matInput id="initialize-method" placeholder="Enter a paramater name">
+                            </mat-form-field>
+                            <mat-form-field appearance="outline" style="width: 20vw;">
+                                <input matInput id="initialize-method" placeholder="Enter a parameter value">
+                            </mat-form-field>
+                        </div>
+                        <div class="buttons">
+                            <div class="input-button" (click)="toggleCallFunction()">Add parameters</div>
+                            <div class="input-button" (click)="backToStart()">Start again?</div>
+                        </div>
+                    </div>
+                </form>
+            </mat-card-content>
+        </mat-card>
+        <mat-card *ngIf="showCallFunction" class="input-card">
+            <mat-card-title class="input-title">Call function</mat-card-title>
+            <mat-card-content>
+                <div class="input-form-container">
+                    <div class="call-function-element">
+                        <p>Congratulations, you've built a message! Calling the callFunction method on the Atlantic smart contract 
+                        will send this to Binance Smart Chain, and use it to call the function you specified!</p>
+                    </div>
+                    <div class="call-function-element"><h2>Your message:</h2></div>
+                    <div class="call-function-element"><h2>Parameters:</h2></div>
+                    <div class="buttons">
+                        <div class="input-button" (click)="toggleSuccessCard()">Call my function!</div>
+                        <div class="input-button" (click)="backToStart()">Start again?</div>
+                    </div>
+                </div>
+            </mat-card-content>
+        </mat-card>
+        <mat-card *ngIf="showSuccessCard" class="input-card">
+            <mat-card-title class="input-title">Success!</mat-card-title>
+            <mat-card-content>
+                <div class="success-element"><h2>Success, your message has been received on the Binance Smart Chain!</h2></div>
+                <div class="success-element"><img src="assets/success-icon.png"></div>
+                <div class="buttons">
+                    <div class="input-button" (click)="backToStart()">Call another function?</div>
+                </div>
+            </mat-card-content>
+        </mat-card>
+    </div>
+
+    <div class="grid-results">
+
+        <div class="state-card-container">
+            <mat-card-title id="title">
+                Contract State
+            </mat-card-title>
+            <form>
+                <label for="initialize-method">Id: </label>
+                <mat-form-field appearance="outline" style="width: 20vw;">
+                    <input matInput id="initialize-method" placeholder="Enter a message Id">
+                </mat-form-field>
+            </form>
+            <mat-card class="state-card">
+                <mat-card-title class="state-title">Ethereum</mat-card-title>
+                <mat-card-content>
+                    <p>Id: </p>
+                    <p>Method: </p>
+                    <p>Callback: </p>
+                    <p>Amount: </p>
+                    <p>Destination: </p>
+                </mat-card-content>
+            </mat-card>
+            <mat-card class="state-card">
+                <mat-card-title class="state-title">Binance</mat-card-title>
+                <mat-card-content>
+                    <p>Id: </p>
+                    <p>Method: </p>
+                    <p>Callback: </p>
+                    <p>Amount: </p>
+                    <p>Destination: </p>
+                </mat-card-content>
+            </mat-card>
+        </div>
+
+    </div>
+
+</div>
