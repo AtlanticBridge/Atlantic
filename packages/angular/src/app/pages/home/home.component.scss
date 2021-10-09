@@ -13,6 +13,12 @@
 
 .grid-inputs {
     grid-area: inputs;
+    .initialize-card {
+        .input-form-container {
+            display: flex;
+            flex-direction: column;
+        }
+    }
 }
 
 .grid-results {

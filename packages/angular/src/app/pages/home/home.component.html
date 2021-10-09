@@ -1,8 +1,59 @@
 <div class="atlantic-demo-grid">
 
     <div class="grid-inputs">
-
-
+        <mat-card class="initialize-card">
+            <mat-card-title>Initialize message</mat-card-title>
+            <mat-card-content>
+                <form>
+                    <div class="input-form-container">
+                        <div class="input-element">
+                            <label for="initialize-method">Method: </label>
+                            <mat-form-field appearance="outline" style="width: 20vw;">
+                                <input matInput id="initialize-method" placeholder="enter a method name">
+                            </mat-form-field>
+                        </div>
+                        <div class="input-element">
+                            <label for="initialize-method">Callback: </label>
+                            <mat-form-field appearance="outline" style="width: 20vw;">
+                                <input matInput id="initialize-method" placeholder="the callback address">
+                            </mat-form-field>
+                        </div>
+                        <div class="input-element">
+                            <label for="initialize-method">Amount: </label>
+                            <mat-form-field appearance="outline" style="width: 20vw;">
+                                <input matInput id="initialize-method" placeholder="amount to transfer">
+                            </mat-form-field>
+                        </div>
+                        <div class="input-element">
+                            <label for="initialize-method">Destination: </label>
+                            <mat-form-field appearance="outline" style="width: 20vw;">
+                                <input matInput id="initialize-method" placeholder="the destination address">
+                            </mat-form-field>
+                        </div>
+                    </div>
+                </form>
+            </mat-card-content>
+        </mat-card>
+        <mat-card class="parameters-card">
+            <mat-card-title>Build parameters</mat-card-title>
+            <mat-card-content>
+                <form>
+                    <mat-form-field appearance="outline" style="width: 20vw;">
+                        <input matInput id="initialize-method" placeholder="enter a method name">
+                    </mat-form-field>
+                </form>
+            </mat-card-content>
+        </mat-card>
+        <mat-card class="call-function-card">
+            <mat-card-title>Call function</mat-card-title>
+            <mat-card-content>
+                <form>
+                    <mat-form-field appearance="outline" style="width: 20vw;">
+                        <input matInput id="initialize-method" placeholder="enter a method name">
+                    </mat-form-field>
+                </form>
+            </mat-card-content>
+        </mat-card>
     </div>
 
     <div class="grid-results">
@@ -12,7 +63,14 @@
                 Contract State
             </mat-card-title>
             <mat-card class="state-card">
-                <p>Ethereum</p>
+                <mat-card-title>Ethereum</mat-card-title>
+                <mat-card-content>
+                    <p>Id: </p>
+                    <p>Method</p>
+                    <p>Callback</p>
+                    <p>Amount</p>
+                    <p>Destination</p>
+                </mat-card-content>
             </mat-card>
             <mat-card class="state-card">
                 <p>Binance</p>
