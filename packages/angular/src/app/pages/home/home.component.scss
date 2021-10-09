@@ -30,6 +30,11 @@
             margin: auto;
             text-align: center;
         }
+        .call-function-element {
+            max-width: 50%;
+            margin: auto;
+            text-align: center;
+        }
         .buttons {
             display: flex;
             justify-content: center;
@@ -78,15 +83,12 @@
                     min-width: 100px;
                     font-weight: 500;
                 }
-            .call-function-element {
-                background-color: aqua;
-            }
             }
             #parameter-inputs.input-element {
                 display: inline-block;
                 mat-form-field {
                     max-width: 250px;
-                    margin: 20px;
+                    margin: 5px 20px;
                 }
                 h2 {
                     min-width: 250px;
@@ -123,6 +125,24 @@
         .state-card {
             width: 100%;
             margin-top: 10%;
+            padding: 0;
+            border-radius: 5px 5px 0 0;
+            box-shadow: 0 0 20px rgba(0, 0, 0, 0.15);
+            overflow: hidden;
+            background-color: #fff;
+            max-height: 600px;
+            .state-title {
+                background-color: black;
+                color: #009879;
+                text-align: left;
+                padding: 12px 15px;
+            }
+            p {
+                margin-left: 10px;
+            }
+        }
+        #title {
+            color: #ffffff;
         }
     }
 
