@@ -3,13 +3,13 @@ var Web3 = require('web3')
 require('dotenv').config()
 
 const receiveMessage = require('../abi/ReceiveMessage.json')
-const bscContractInfo = require('../../packages/truffle/outputs/6_bsc-testnet_ccip.json')
+// const bscContractInfo = require('../../packages/truffle/outputs/6_bsc-testnet_ccip.json')
 
 const web3Bsc = new Web3('https://data-seed-prebsc-1-s1.binance.org:8545')
 
 const bridgeBsc = new web3Bsc.eth.Contract(
   receiveMessage.abi,
-  bscContractInfo.receiveMessage
+  '0xEaed3B434d0FFf6D6d7AA80D72a3B47dD86A3617'
 )
 
 const { address: admin } = web3Bsc.eth.accounts.wallet.add(process.env.BSC_TESTNET_PRIVATE_KEY)

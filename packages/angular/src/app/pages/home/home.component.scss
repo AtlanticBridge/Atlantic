@@ -11,6 +11,37 @@
     grid-template-areas: "inputs results";
 }
 
+::ng-deep {
+    .mat-form-field-appearance-outline .mat-form-field-outline {
+        background-color: white;
+        border-radius: 0.4rem;
+     }
+}
+
+.result-item {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    margin-left: 20px;
+}
+
+.message-get {
+    display: flex;
+    align-items: center;
+    .message-button {
+        background-color: #000000;
+        min-width: 150px;
+        margin: 30px;
+        text-align: center;
+        padding: 10px;
+        color: #009879;
+        border-radius: 5px;
+    }
+    .message-button:hover {
+        cursor: pointer;
+    }
+}
+
 .grid-inputs {
     grid-area: inputs;
     display: flex;
@@ -29,6 +60,14 @@
             max-width: 50%;
             margin: auto;
             text-align: center;
+        }
+        .spinner-element {
+            height: 80%;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            color: #009879;
         }
         .call-function-element {
             max-width: 50%;
@@ -84,6 +123,9 @@
                     font-weight: 500;
                 }
             }
+            mat-spinner {
+                color: #009879;
+            }
             #parameter-inputs.input-element {
                 display: inline-block;
                 mat-form-field {
@@ -103,7 +145,8 @@
 .grid-results {
     grid-area: results;
     background-color: #009879;
-    padding: 10%;
+    padding-left: 10%;
+    padding-right: 10%;
     // margin: 50px;
     // border: 4px solid orange;
     // border-radius: 20px;
@@ -124,7 +167,6 @@
         justify-content: center;
         .state-card {
             width: 100%;
-            margin-top: 10%;
             padding: 0;
             border-radius: 5px 5px 0 0;
             box-shadow: 0 0 20px rgba(0, 0, 0, 0.15);

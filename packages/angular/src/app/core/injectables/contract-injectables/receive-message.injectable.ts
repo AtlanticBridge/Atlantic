@@ -21,6 +21,7 @@ export class ReceiveMessageInjectable extends Contract {
         const provider = new ethers.providers.JsonRpcProvider(environment.Moralis_Bsc_Testnet_SpeedyNode)
         
         // --- Contract Address ---
+        // 0xEaed3B434d0FFf6D6d7AA80D72a3B47dD86A3617
         const receiveMessageAddress = ReceiveMessageContract.networks[networkId].address;    // This should come from one of the environment files.
 
         // --- MetaMask Signer ---

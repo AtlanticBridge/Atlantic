@@ -43,11 +43,9 @@ contract FunctionCallerV3 is ChainlinkClient, Math {
     //** CONTRACT EVENTS **//
     event FunctionExecuted(bool success, address destination, string method);
     event MessageSuccess(uint256 id, string method, address callback, uint32 amount, address destination);
-
-    // ** CONTRACT LOGIC **//
+    event MessageId(uint256 id);
 
     // ** OUTBOUND LOGIC **//
-
     /**
    * @notice Initializes a Atlantic Message for CCIP
    * @dev Sets the ID, method, callback, amount, and destination on the request
@@ -58,7 +56,7 @@ contract FunctionCallerV3 is ChainlinkClient, Math {
    * @return id The id
    *
    * Example)
-   * "executeFunction","0xCb968FC92C735575941558A655a94895d743E34a",24,"0xEaed3B434d0FFf6D6d7AA80D72a3B47dD86A3617"
+   * "executeFunction","0x86577a2EB86f38d63bcd2B20AfFFa843824D5BFc",24,"0xEaed3B434d0FFf6D6d7AA80D72a3B47dD86A3617"
    */
     function initializeMessage(
         string calldata _method,
@@ -77,18 +75,18 @@ contract FunctionCallerV3 is ChainlinkClient, Math {
         message.amount = _amount;
         message.destination = _destination;
         messages[id] = message;
-        return id;
+
+        emit MessageId(id);
     }
 
-    function getMessage(uint64 id) public view returns (address) {
-        Message memory message = messages[id];
-
-        return message.destination;
+    // ** CONTRACT LOGIC **//
+    function getMessage(uint64 _messageId) public view returns (uint256, address, address, uint64, string memory) {
+        Message memory message = messages[_messageId];
+        return (message.amount, message.callback, message.destination, message.id, message.method);
     }
     
     function getMessageOwner(uint64 id) public view returns (address) {
         address messageOwner = messageOwners[id];
-
         return messageOwner;
     }
 
