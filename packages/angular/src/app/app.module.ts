@@ -12,12 +12,10 @@ import { MaterialModule }          from "./modules/material.module";
 // --- COMPONENTS ---
 import { AppComponent }                from './app.component';
 import { ToolbarComponent }            from './core/components/toolbar/toolbar.component';
-import { CardComponent }               from './core/components/card/card.component';
 import { WalletInformationComponent }  from './pages/wallet-information/wallet-information.component';
 import { ChainlinkContractsComponent } from './pages/chainlink-contracts/chainlink-contracts.component';
 import { HomeComponent }               from './pages/home/home.component';
 import { EthStablecoinComponent }      from './pages/eth-stablecoin/eth-stablecoin.component';
-import { EthFaucetComponent }          from './core/components/eth-faucet/eth-faucet.component';
 
 
 
@@ -26,12 +24,10 @@ import { EthFaucetComponent }          from './core/components/eth-faucet/eth-fa
   declarations: [
     AppComponent,
     ToolbarComponent,
-    CardComponent,
     WalletInformationComponent,
     ChainlinkContractsComponent,
     HomeComponent,
-    EthStablecoinComponent,
-    EthFaucetComponent
+    EthStablecoinComponent
   ],
   imports: [
     BrowserModule,

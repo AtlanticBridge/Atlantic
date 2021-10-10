@@ -3,30 +3,30 @@
     <div class="grid-inputs">
         <mat-card *ngIf="showInitializeMessage" class="input-card">
             <mat-card-title class="input-title">Initialize message</mat-card-title>
-            <form>
+            <form [formGroup]="messageForm">
                 <div class="input-form-container">
                     <div class="input-element">
                         <label for="initialize-method">Method: </label>
                         <mat-form-field appearance="outline" style="width: 20vw;">
-                            <input matInput id="initialize-method" placeholder="enter a method name">
+                            <input matInput formControlName="method" id="initialize-method" placeholder="enter a method name">
                         </mat-form-field>
                     </div>
                     <div class="input-element">
                         <label for="initialize-method">Callback: </label>
                         <mat-form-field appearance="outline" style="width: 20vw;">
-                            <input matInput id="initialize-method" placeholder="the callback address">
+                            <input matInput formControlName="callback" id="initialize-method" placeholder="the callback address">
                         </mat-form-field>
                     </div>
                     <div class="input-element">
                         <label for="initialize-method">Amount: </label>
                         <mat-form-field appearance="outline" style="width: 20vw;">
-                            <input matInput id="initialize-method" placeholder="amount to transfer">
+                            <input matInput formControlName="amount" id="initialize-method" placeholder="amount to transfer">
                         </mat-form-field>
                     </div>
                     <div class="input-element">
                         <label for="initialize-method">Destination: </label>
                         <mat-form-field appearance="outline" style="width: 20vw;">
-                            <input matInput id="initialize-method" placeholder="the destination address">
+                            <input matInput formControlName="destination" id="initialize-method" placeholder="the destination address">
                         </mat-form-field>
                     </div>
                 </div>
@@ -112,38 +112,76 @@
                 </div>
             </mat-card-content>
         </mat-card>
+        <mat-card *ngIf="showErrorCard" class="input-card">
+            <mat-card-title class="input-title">Rejected!</mat-card-title>
+            <mat-card-content>
+                <div class="success-element"><h2>Rejected, your message has been rejected on the Binance Smart Chain!</h2></div>
+                <div class="success-element"><img src="assets/error-icon.png"></div>
+                <div class="buttons">
+                    <div class="input-button" (click)="backToStart()">Call another function?</div>
+                </div>
+            </mat-card-content>
+        </mat-card>
+        <mat-card *ngIf="showLoadingCard" class="input-card">
+            <mat-card-title class="input-title">Submitting your Metamask Transaction!</mat-card-title>
+            <mat-card-content class="spinner-element">
+                <h2>Sending Transaction...</h2>
+                <mat-spinner class="input-element"></mat-spinner>
+            </mat-card-content>
+        </mat-card>
     </div>
 
     <div class="grid-results">
 
         <div class="state-card-container">
             <mat-card-title id="title">
-                Contract State
+                <h3>Contract State</h3>
             </mat-card-title>
-            <form>
-                <label for="initialize-method">Id: </label>
+            <form [formGroup]="messageIdForm" class="message-get">
+                <!-- <label for="initialize-method">Id: </label> -->
                 <mat-form-field appearance="outline" style="width: 20vw;">
-                    <input matInput id="initialize-method" placeholder="Enter a message Id">
+                    <input matInput formControlName="id" id="initialize-method" placeholder="Enter a MessageId...">
                 </mat-form-field>
+                <div class="message-button" (click)="getMessage()">Get Message</div>
             </form>
             <mat-card class="state-card">
                 <mat-card-title class="state-title">Ethereum</mat-card-title>
                 <mat-card-content>
-                    <p>Id: </p>
-                    <p>Method: </p>
-                    <p>Callback: </p>
-                    <p>Amount: </p>
-                    <p>Destination: </p>
+                    <div class="result-item">
+                        <h4>ID:</h4> <p>{{ethMessageInterface.id}}</p>
+                    </div>
+                    <div class="result-item">
+                        <h4>Method:</h4> <p>{{ethMessageInterface.method}}</p>
+                    </div>
+                    <div class="result-item">
+                        <h4>Callback:</h4> <p>{{ethMessageInterface.callback}}</p>
+                    </div>
+                    <div class="result-item">
+                        <h4>Amount:</h4> <p>{{ethMessageInterface.amount}}</p>
+                    </div>
+                    <div class="result-item">
+                        <h4>Destination:</h4> <p>{{ethMessageInterface.destination}}</p>
+                    </div>
                 </mat-card-content>
             </mat-card>
-            <mat-card class="state-card">
+            <mat-card class="state-card" style="margin-top:5%;">
                 <mat-card-title class="state-title">Binance</mat-card-title>
                 <mat-card-content>
-                    <p>Id: </p>
-                    <p>Method: </p>
-                    <p>Callback: </p>
-                    <p>Amount: </p>
-                    <p>Destination: </p>
+                    <div class="result-item">
+                        <h4>ID:</h4> <p>{{bscMessageInterface.id}}</p>
+                    </div>
+                    <div class="result-item">
+                        <h4>Method:</h4> <p>{{bscMessageInterface.method}}</p>
+                    </div>
+                    <div class="result-item">
+                        <h4>Callback:</h4> <p>{{bscMessageInterface.callback}}</p>
+                    </div>
+                    <div class="result-item">
+                        <h4>Amount:</h4> <p>{{bscMessageInterface.amount}}</p>
+                    </div>
+                    <div class="result-item">
+                        <h4>Destination:</h4> <p>{{bscMessageInterface.destination}}</p>
+                    </div>
                 </mat-card-content>
             </mat-card>
         </div>

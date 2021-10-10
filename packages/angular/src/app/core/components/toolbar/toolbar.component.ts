@@ -20,7 +20,7 @@ export class ToolbarComponent implements OnInit {
   chainId: string;
 
   walletInfoRoute:    string = 'blue';
-  contractRoute:      string = "primary";
+  contractRouteStyle: string = "link-active";
   chainlinkStyle:     string = 'link';
   ethstablecoinStyle: string = 'link';
   walletinfoStyle:    string = 'link';
@@ -83,25 +83,28 @@ export class ToolbarComponent implements OnInit {
       if(routeEvent instanceof NavigationEnd) {
         this.currentRoute = routeEvent.url;
         if (routeEvent.url === '/') {
-          this.contractRoute = 'accent';
+          this.contractRouteStyle = 'link-active';
           this.chainlinkStyle = 'link';
           this.walletinfoStyle = 'link';
           this.ethstablecoinStyle = 'link';
         }
 
         if (routeEvent.url == '/walletinfo') {
+          this.contractRouteStyle = 'link';
           this.chainlinkStyle = 'link';
           this.walletinfoStyle = 'link-active';
           this.ethstablecoinStyle = 'link';
         }
 
         if (routeEvent.url == '/chainlink') {
+          this.contractRouteStyle = 'link';
           this.chainlinkStyle = 'link-active';
           this.walletinfoStyle = 'link';
           this.ethstablecoinStyle = 'link';
         }
 
         if (routeEvent.url == '/ethstablecoin') {
+          this.contractRouteStyle = 'link';
           this.chainlinkStyle = 'link';
           this.walletinfoStyle = 'link';
           this.ethstablecoinStyle = 'link-active';

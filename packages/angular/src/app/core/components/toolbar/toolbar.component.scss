@@ -37,6 +37,8 @@
     .item {
         margin: 0.5rem;
         align-self: center;
+        color: #009879;
+        font-weight: bolder;
     }
 }
 
@@ -44,7 +46,8 @@
     border: 1px solid white;
     border-radius: 10px;
     background-color: black;
-    color: slateblue;
+    // color: slateblue;
+    color: #009879;
     box-shadow: rgba(0, 0, 0, 0.25) 0px 54px 55px, 
                 rgba(0, 0, 0, 0.12) 0px -12px 30px, 
                 rgba(0, 0, 0, 0.12) 0px 4px 6px, 
@@ -81,9 +84,9 @@ mat-toolbar-row {
 
         .link-active {
             margin: 10px;
-            border-bottom: 1px solid orange;
-            border-bottom-color: orange;
-            color:orange;
+            border-bottom: 1px solid #009879;
+            border-bottom-color: #009879;
+            color:#009879;
             // font-weight: bold;
             font-size: small;
         }
