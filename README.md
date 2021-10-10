@@ -1,4 +1,4 @@
-# Angular & Truffle Boilerplate
+# Atlantic Message Protocol
 
 ## Pre-Requisites
 
