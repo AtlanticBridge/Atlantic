@@ -36,7 +36,7 @@ class Binance {
     var _method = senddata.method
     var _callback = '0x'.concat(senddata.callback)
 
-    const tx = bridgeBsc.methods.receiveFromRemoteChain(_method, _callback, _amount, _destination, _id)
+    const tx = bridgeBsc.methods.receiveFromRemoteChain(_method, _callback, +_amount, _destination, _id)
 
     console.log('...creating promise')
     const [gasPrice, gasCost] = await Promise.all([
