@@ -4,7 +4,7 @@ const FunctionCaller = artifacts.require("FunctionCaller")
 constract('[CCIP Call] Basic test function call for CCIP', (accounts) => {
 
     const owner = accounts[0]
-    var funcCallerInstance
+    var funcCallerInstance 
 
     before('Setup Contract', async function() {
         funcCallerInstance = await FunctionCaller.deployed()

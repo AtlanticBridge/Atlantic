@@ -14,12 +14,16 @@ module.exports = {
       host: "127.0.0.1",
       port: 7545,
       network_id: "*",
-      websockets: true
+      websockets: true,
+      gas: 50000000,
+      gasLimit: 800000000000
     },
     develop: {
       host: "127.0.0.1",
       port: 9545,
-      network_id: "*"
+      network_id: "*",
+      gas: 4700000,
+      gasPrice: 8000000000
     },
     kovan: {
       provider: function() {
