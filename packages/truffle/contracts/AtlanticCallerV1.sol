@@ -6,7 +6,7 @@ import "@openzeppelin/contracts/proxy/Initializable.sol";
 import "./Math.sol";
 import "./AtlanticMessage.sol";
 
-contract FunctionCallerV3 is ChainlinkClient, Math, Initializable {
+contract AtlanticCallerV1 is ChainlinkClient, Math, Initializable {
 
     // ** CONTRACT FUNCTIONS ** //
     uint256 fee;
@@ -38,10 +38,10 @@ contract FunctionCallerV3 is ChainlinkClient, Math, Initializable {
 
     }
     
-    function callFunction(uint64 _id, string memory _chainId) public {
-        require(atlanticMessage.messageOwners[_id] == msg.sender, "Only the originator of the message can call a function with it.");
+    function callFunction(uint64 _messageId, string memory _chainId) public {
+        require(atlanticMessage.getMessageOwner(_messageId) == msg.sender, "Only the originator of the message can call a function with it.");
         // Message memory message = messages[_id];
-        AtlanticMessage.Message memory message = atlanticMessage.messages[_id];
+        AtlanticMessage.Message memory message = atlanticMessage.getMessage(_messageId);
         sendToRemoteChain(_chainId, message);
     }
 
