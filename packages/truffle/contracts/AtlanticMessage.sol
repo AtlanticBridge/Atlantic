@@ -1,13 +1,23 @@
 // SPDX-License-Identifier: MIT
-pragma solidity >=0.6.0;
+pragma solidity ^0.6.0;
 
-import "@chainlink/contracts/src/v0.6/ChainlinkClient.sol";
-import "./Math.sol";
+import "@chainlink/contracts/src/v0.6/vendor/BufferChainlink.sol";
+import "@chainlink/contracts/src/v0.6/vendor/CBORChainlink.sol";
+import "@openzeppelin/contracts/proxy/Initializable.sol";
+// Add Interface
+import "./Interfaces/MessageInterface.sol";
 
-contract FunctionCallerV3 is ChainlinkClient, Math {
+contract AtlanticMessage is Initializable {
 
     using CBORChainlink for BufferChainlink.buffer;
-    // using Chainlink for Chainlink.Request;
+
+    // ** CONTRACT VARIABLES ** //
+    uint256 internal constant defaultBufferSize = 256; // solhint-disable-line const-name-snakecase
+    uint64 messageCounter;
+    address owner;
+    mapping(uint64 => Message) private messages;
+    mapping(uint64 => address) private messageOwners;
+    mapping(address => bool) private validContracts;
 
     struct Message {
         uint64 id;
@@ -18,34 +28,15 @@ contract FunctionCallerV3 is ChainlinkClient, Math {
         BufferChainlink.buffer buf;
     }
 
-    Message[] allMessages;
-
-    uint256 internal constant defaultBufferSize = 256; // solhint-disable-line const-name-snakecase
-    uint64 messageCounter;
-    address owner;
-    mapping(uint64 => Message) private messages;
-    mapping(uint64 => address) private messageOwners;
-
-    // Chainlink Client Declarations
-    uint256 fee;
-    bytes32 jobId;
-    address OracleAddress;
-
-    constructor(address _oracleAddress) public {
-        setPublicChainlinkToken();
-        messageCounter = 0;
-
-        // Chainlink Client Info
-        fee = 1 * 10 ** 18;
-        OracleAddress = _oracleAddress;
-    }
-
     //** CONTRACT EVENTS **//
-    event FunctionExecuted(bool success, address destination, string method);
-    event MessageSuccess(uint256 id, string method, address callback, uint32 amount, address destination);
     event MessageId(uint256 id);
 
-    // ** OUTBOUND LOGIC **//
+    // ** CONSTRUCTOR ** //
+    function initializable() public initializer {
+        messageCounter = 0;
+        owner = msg.sender;
+    }
+
     /**
      * @notice Initializes a Atlantic Message for CCIP
      * @dev Sets the ID, method, callback, amount, and destination on the request
@@ -53,7 +44,8 @@ contract FunctionCallerV3 is ChainlinkClient, Math {
      * @param _callback The callback address
      * @param _amount The transfer amount
      * @param _destination The call destination
-     * @return id The id
+     *
+     * Emits the Message ID.
      *
      * Example)
      * "executeFunction","0x86577a2EB86f38d63bcd2B20AfFFa843824D5BFc",24,"0xEaed3B434d0FFf6D6d7AA80D72a3B47dD86A3617"
@@ -63,7 +55,7 @@ contract FunctionCallerV3 is ChainlinkClient, Math {
         address _callback,
         uint32 _amount,
         address _destination
-    ) external returns (uint64 id) {
+    ) external validContract(msg.sender) returns (uint64 id) {
         Message memory message;
         id = messageCounter + 1;
         messageCounter++;
@@ -85,11 +77,18 @@ contract FunctionCallerV3 is ChainlinkClient, Math {
         return (message.amount, message.callback, message.destination, message.id, message.method);
     }
     
-    function getMessageOwner(uint64 id) public view returns (address) {
+    function getMessageOwner(
+        uint64 id
+    ) external view returns (address) {
         address messageOwner = messageOwners[id];
         return messageOwner;
     }
 
+
+    // ********************** //
+    // ** BUFFER FUNCTIONS ** //
+    // ********************** //
+    // Buffer functions should only be called by our integrate Atlantic contracts.
     /**
     * @notice Sets the data for the buffer without encoding CBOR on-chain
     * @dev CBOR can be closed with curly-brackets {} or they can be left off
@@ -165,67 +164,35 @@ contract FunctionCallerV3 is ChainlinkClient, Math {
         message.buf.endSequence();
     }
 
-    function callFunction(uint64 _id, string memory _chainId) public {
+
+    // ** SETUP FUNCTIONS ** //
+    function addValidContract(
+        address _contract
+    ) external onlyOwner {
+        validContracts[_contract] = true;
+    }
+
+    function transferOwner(
+        address _newOwner
+    ) external onlyOwner {
+        owner = _newOwner;
+    }
+
+
+    // ** MODIFIERS ** //
+    modifier validContract(address _contract) {
+        if(validContracts[_contract] == true) {
+            _;
+        }
+    }
+
+    modifier onlyOwner() {
+        require(msg.sender == owner);
+        _;
+    }
+
+    modifier messageOwner(uint64 _id) {
         require(messageOwners[_id] == msg.sender, "Only the originator of the message can call a function with it.");
-        Message memory message = messages[_id];
-        sendToRemoteChain(_chainId, message);
-    }
-
-    /**
-    * @notice Sets the jobId to be called on the Chainlink Node.
-    * @param _jobId The jobId of the tasks on the Chainlink Node
-    */
-    function setJobId(string memory _jobId) public {
-        jobId = stringToBytes32(_jobId);
-    }
-
-    function sendToRemoteChain(string memory _chainId, Message memory _message) private {
-        // Send data to Chainlink node/CCIP however necessary
-        Chainlink.Request memory request = buildChainlinkRequest(jobId, address(this), this.fulfill.selector);
-
-        request.add("chainId", _chainId);
-        request.addUint("id", _message.id);
-        request.add("method", _message.method);
-        request.add("callback", toAsciiString(_message.callback));
-        request.addUint("amount", _message.amount);
-        request.add("destination", toAsciiString(_message.destination));
-
-        sendChainlinkRequestTo(OracleAddress, request, fee);
-    }
-
-    /**
-    * @notice The fulfill function for the Chainlink EA Job.
-    * @param _requestId The Chainlink request id.
-    * @param _messageId The message transmitted.
-    */
-    function fulfill(bytes32 _requestId, uint64 _messageId) public recordChainlinkFulfillment(_requestId)
-    {
-        Message memory message = messages[_messageId];
-        emit MessageSuccess(message.id, message.method, message.callback, message.amount, message.destination);
-    }
-
-    // ** INBOUND LOGIC **//
-
-    function receiveFromRemoteChain(string calldata _method, address _callback, uint32 _amount, address _destination) external {
-        // decode buffer
-        // call execute function
-        executeFunction(_method, _callback, _amount, _destination);
-    }
-
-    function executeFunction(string memory _method, address _callback, uint32 _amount, address _destination) private {
-        // https://ethereum.stackexchange.com/questions/9733/calling-function-from-deployed-contract
-        // https://stackoverflow.com/questions/54360047/calling-function-from-already-deployed-contract-in-solidity
-        // https://medium.com/@houzier.saurav/calling-functions-of-other-contracts-on-solidity-9c80eed05e0f
-        // https://ethereum.stackexchange.com/questions/64881/how-does-delegatecall-work-from-solidity-0-5-0-onwards
-    }
-
-    //** CONTRACT GOVERNANCE **//
-    function setOwner(address _address) external {
-        require(msg.sender == owner, "Only the owner can set a new owner");
-        owner = _address;
-    }
-
-    function getOwner() external view returns(address) {
-        return owner;
+        _;
     }
 }

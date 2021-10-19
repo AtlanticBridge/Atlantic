@@ -2,8 +2,13 @@
 pragma solidity >=0.6.0;
 
 import "./Math.sol";
+import "@chainlink/contracts/src/v0.6/vendor/BufferChainlink.sol";
+import "@chainlink/contracts/src/v0.6/vendor/CBORChainlink.sol";
 
 contract ReceiveMessage is Math {
+
+    using CBORChainlink for BufferChainlink.buffer;
+    // using Chainlink for Chainlink.Request;
 
     struct Message {
         uint64 id;
@@ -11,6 +16,7 @@ contract ReceiveMessage is Math {
         address callback;
         uint32 amount;
         address destination;
+        BufferChainlink.buffer buf;
     }
 
     Message[] allMessages;
