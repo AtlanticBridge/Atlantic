@@ -6,19 +6,13 @@
 
 [2. Structure](#structure)
 
-[3. Contract Overview](#contract-overview)
+[3. Governance](#governance)
 
-[4. Bridge Integrity And Safety](#bridge-integrity-and-safety)
+[4. Potential Use Cases](#potential-use-cases)
 
-[5. Validators](#validators)
+[5. Roadmap](#roadmap)
 
-[6. Governance](#governance)
-
-[7. Future Developments](#future-developments)
-
-[8. Potential Use Cases](#potential-use-cases)
-
-[9. Formal Definitions](#formal-definitions)
+[6. Formal Definitions](#formal-definitions)
 
 ### Abstract
 Overview of the project
@@ -31,23 +25,25 @@ Atlantic Project is a message building protocol, acting as a layer on top of Cha
 #### Why use Atlantic Project?
 The protocol works to ensure that information is transferred between blockchains in the fastest and most gas efficient way possible. Similarly to how many organisations rely on cloud providers to provision on-demand computer system resources, dApps can rely on Atlantic to provide high quality cross-chain services. Benefits of relying on a third party service like Atlantic include:
 
-•	Developer time – 
+•	Reduced developer time – Less upfront development time is required to build cross-chain dApps, as backend resources are already provisioned.
 
-•	Standardization – 
+•	Seamless integration – Atlantic abstracts away the complexity of cross-chain data transfer, making calling functions and deploying contracts across blockchains as easy as doing so natively.
 
-•	Repitition – 
+•	Repitition – Atlantic stores prior function calls with an associated ID, allowing the originator to call the function as many as times as required. Resusing function calls is one of making the cross-chain transfers more efficient.
 
-•	Gas efficient – 
+•	Gas efficient – One of the project's key focuses is making cross-chain actions as gas efficient as possible.
 
-•	Continual development – taking advantage of most recent technologies, continually improving
+•	Continual development – A focal point of the Atlantic community will be leveraging new technologies to continually improve the efficacy of the protocol.
 
 ### Structure
-Overview of how messages are sent from A to B and how Atlantic contracts are structured, with an example given by functionCaller
+Atlantic works by having a set of standardized contracts deployed across all blockchains integrated with the protocol. Each contract interacts with CCIP, either sending or receiving data, and mapping it to a useable format. Here we describe how this works in more depth by examining Atlantics functionCaller contract, one of the key services provided by the project.
+
+
 
 ### Governance
 
 ### Potential Use Cases
 
-### Future Developments
+### Roadmap
 
 ### Formal Definitions
