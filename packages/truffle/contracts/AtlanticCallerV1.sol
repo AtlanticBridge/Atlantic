@@ -4,7 +4,7 @@ pragma solidity >=0.6.0;
 import "@chainlink/contracts/src/v0.6/ChainlinkClient.sol";
 import "@openzeppelin/contracts/proxy/Initializable.sol";
 import "./Math.sol";
-import "./AtlanticMessage.sol";
+import "./AtlanticMessageV1.sol";
 
 contract AtlanticCallerV1 is ChainlinkClient, Math, Initializable {
 
@@ -12,7 +12,7 @@ contract AtlanticCallerV1 is ChainlinkClient, Math, Initializable {
     uint256 fee;
     bytes32 jobId;
     address OracleAddress;
-    AtlanticMessage atlanticMessage;
+    AtlanticMessageV1 atlanticMessage;
 
     // ** CONSTRUCTOR ** //
     function initializable(
