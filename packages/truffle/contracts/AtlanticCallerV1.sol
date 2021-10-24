@@ -3,7 +3,7 @@ pragma solidity >=0.6.0;
 
 import "@chainlink/contracts/src/v0.6/ChainlinkClient.sol";
 import "@openzeppelin/contracts/proxy/Initializable.sol";
-import "./Math.sol";
+import "./utils/Math.sol";
 import "./AtlanticMessageV1.sol";
 
 contract AtlanticCallerV1 is ChainlinkClient, Math, Initializable {

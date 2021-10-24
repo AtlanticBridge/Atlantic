@@ -1,7 +1,7 @@
 // SPDX-License-Identifier: MIT
 pragma solidity >=0.6.0;
 
-import "./Math.sol";
+import "./utils/Math.sol";
 import "@chainlink/contracts/src/v0.6/vendor/BufferChainlink.sol";
 import "@chainlink/contracts/src/v0.6/vendor/CBORChainlink.sol";
 
