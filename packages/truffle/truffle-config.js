@@ -8,22 +8,22 @@ module.exports = {
   // You can also follow this format for other networks;
   // see <http://truffleframework.com/docs/advanced/configuration>
   // for more details on how to specify configuration options!
-  //
+  // 000000000000
   networks: {
     ganache: {
       host: "127.0.0.1",
       port: 7545,
       network_id: "*",
       websockets: true,
-      gas: 50000000,
-      gasLimit: 800000000000
+      gas: 4712388,
+      gasPrice: 1000000000000
     },
     develop: {
       host: "127.0.0.1",
       port: 9545,
       network_id: "*",
-      gas: 4700000,
-      gasPrice: 8000000000
+      gas: 4712388000000000000000000000000,
+      gasPrice: 10000000
     },
     kovan: {
       provider: function() {

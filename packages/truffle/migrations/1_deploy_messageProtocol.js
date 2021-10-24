@@ -1,5 +1,6 @@
 const OracleContract = artifacts.require("Oracle.sol")
 const FunctionCallerV3 = artifacts.require("FunctionCallerV3")
+const TestContract = artifacts.require("TestContract")
 const ReceiveMessage = artifacts.require("ReceiveMessage")
 
 var fs = require("fs")
@@ -108,7 +109,8 @@ module.exports = async function(deployer, network, accounts) {
             });
         } 
         
-    if (network == "develop") {
+    if (network == "ganache") {
+        deployer.deploy(TestContract)
         deployer.deploy(FunctionCallerV3, '0xde0b295669a9fd93d5f28d9ec85e40f4cb697bae');
     }
 }
