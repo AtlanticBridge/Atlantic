@@ -2,8 +2,13 @@
 pragma solidity >=0.6.0;
 
 import "./Math.sol";
+import "@chainlink/contracts/src/v0.6/vendor/BufferChainlink.sol";
+import "@chainlink/contracts/src/v0.6/vendor/CBORChainlink.sol";
 
-contract ReceiveMessage is Math {
+contract AtlanticReceiverV1 is Math {
+
+    using CBORChainlink for BufferChainlink.buffer;
+    // using Chainlink for Chainlink.Request;
 
     struct Message {
         uint64 id;
@@ -11,6 +16,7 @@ contract ReceiveMessage is Math {
         address callback;
         uint32 amount;
         address destination;
+        BufferChainlink.buffer buf;
     }
 
     Message[] allMessages;
@@ -34,9 +40,14 @@ contract ReceiveMessage is Math {
     event FunctionExecuted(string _method, address _callback, uint32 _amount, address _destination);
 
     // ** CONTRACT LOGIC **//
-    function getMessage(uint64 _messageId) public view returns (uint256, address, address, uint64, string memory) {
+    function get1Message(uint64 _messageId) public view returns (uint256, address, address, uint64, string memory) {
         Message memory message = messages[_messageId];
         return (message.amount, message.callback, message.destination, message.id, message.method);
+    }
+
+    function getMessage(uint64 _messageId) public view returns (Message calldata) {
+        Message memory message = messages[_messageId];
+        return message;
     }
 
     // ** INBOUND LOGIC **//
