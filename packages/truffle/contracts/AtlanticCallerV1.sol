@@ -6,7 +6,36 @@ import "@openzeppelin/contracts/proxy/Initializable.sol";
 import "./utils/Math.sol";
 import "./AtlanticMessageV1.sol";
 
+/**
+ * TODO Items:
+ *
+ * [1] Chainlink fee should be covered in the smart contract.
+ * [1a] Include a modifier that requires a payment for the message transfer.
+ * [2] Add requirement or method for the add params functions. More than likely needs to autogenerate key.
+ */
+
 contract AtlanticCallerV1 is ChainlinkClient, Math, Initializable {
+
+    // ** MESSAGE PROTOCOL VARIABLES ** //
+    using CBORChainlink for BufferChainlink.buffer;
+
+    // ** CONTRACT VARIABLES ** //
+    uint256 internal constant defaultBufferSize = 256; // solhint-disable-line const-name-snakecase
+    uint64 messageCounter;
+    address owner;
+    mapping(uint64 => Message) private messages;
+    mapping(uint64 => address) private messageOwners;
+    mapping(address => bool) private validContracts;
+
+    struct Message {
+        uint64 id;
+        string method;
+        address callback;
+        uint32 amount;
+        address destination;
+        BufferChainlink.buffer params;
+    }
+    // ******************************** //
 
     // ** CONTRACT FUNCTIONS ** //
     uint256 fee;
@@ -16,11 +45,9 @@ contract AtlanticCallerV1 is ChainlinkClient, Math, Initializable {
 
     // ** CONSTRUCTOR ** //
     function initializable(
-        address _oracleAddress,
-        address _atlanticMessageContract
+        address _oracleAddress
     ) public initializer {
         setPublicChainlinkToken();
-        atlanticMessage = AtlanticMessage(_atlanticMessageContract);
         fee = 1 * 10 ** 18;
         OracleAddress = _oracleAddress;
     }
@@ -28,6 +55,7 @@ contract AtlanticCallerV1 is ChainlinkClient, Math, Initializable {
     //** CONTRACT EVENTS **//
     event FunctionExecuted(bool success, address destination, string method);
     event MessageSuccess(uint256 id, string method, address callback, uint32 amount, address destination);
+    event MessageId(uint256 id);
 
     function setMessage(
         string calldata _method,
@@ -40,8 +68,7 @@ contract AtlanticCallerV1 is ChainlinkClient, Math, Initializable {
     
     function callFunction(uint64 _messageId, string memory _chainId) public {
         require(atlanticMessage.getMessageOwner(_messageId) == msg.sender, "Only the originator of the message can call a function with it.");
-        // Message memory message = messages[_id];
-        AtlanticMessage.Message memory message = atlanticMessage.getMessage(_messageId);
+        Message memory message = messages[_messageId];
         sendToRemoteChain(_chainId, message);
     }
 
@@ -53,7 +80,7 @@ contract AtlanticCallerV1 is ChainlinkClient, Math, Initializable {
         jobId = stringToBytes32(_jobId);
     }
 
-    function sendToRemoteChain(string memory _chainId, AtlanticMessage.Message memory _message) private {
+    function sendToRemoteChain(string memory _chainId, Message memory _message) private {
         // Send data to Chainlink node/CCIP however necessary
         Chainlink.Request memory request = buildChainlinkRequest(jobId, address(this), this.fulfill.selector);
 
@@ -63,6 +90,8 @@ contract AtlanticCallerV1 is ChainlinkClient, Math, Initializable {
         request.add("callback", toAsciiString(_message.callback));
         request.addUint("amount", _message.amount);
         request.add("destination", toAsciiString(_message.destination));
+        // Adds the bytes array of parameters for the function calls.
+        request.addBytes("params", _message.params.buf);
 
         sendChainlinkRequestTo(OracleAddress, request, fee);
     }
@@ -74,25 +103,57 @@ contract AtlanticCallerV1 is ChainlinkClient, Math, Initializable {
     */
     function fulfill(bytes32 _requestId, uint64 _messageId) public recordChainlinkFulfillment(_requestId)
     {
-        AtlanticMessage.Message memory message = atlanticMessage.messages[_messageId];
+        Message memory message = messages[_messageId];
         emit MessageSuccess(message.id, message.method, message.callback, message.amount, message.destination);
     }
 
-    // ** INBOUND LOGIC **//
+    // ** MESSAGE BUILDING FUNCTIONS ** //
+    /**
+     * @notice Initializes a Atlantic Message for CCIP
+     * @dev Sets the ID, method, callback, amount, and destination on the request
+     * @param _method The function method
+     * @param _callback The callback address
+     * @param _amount The transfer amount
+     * @param _destination The call destination
+     *
+     * Emits the Message ID.
+     *
+     * Example)
+     * "executeFunction","0x86577a2EB86f38d63bcd2B20AfFFa843824D5BFc",24,"0xEaed3B434d0FFf6D6d7AA80D72a3B47dD86A3617"
+     */
+    function initializeMessage(
+        string calldata _method,
+        address _callback,
+        uint32 _amount,
+        address _destination
+    ) external validContract(msg.sender) returns (uint64 id) {
+        Message memory message;
+        id = messageCounter + 1;
+        messageCounter++;
+        messageOwners[id] = msg.sender;
+        BufferChainlink.init(message.params, defaultBufferSize);
+        message.id = id;
+        message.method = _method;
+        message.callback = _callback;
+        message.amount = _amount;
+        message.destination = _destination;
+        messages[id] = message;
 
-    function receiveFromRemoteChain(string calldata _method, address _callback, uint32 _amount, address _destination) external {
-        // decode buffer
-        // call execute function
-        executeFunction(_method, _callback, _amount, _destination);
+        emit MessageId(id);
     }
 
-    function executeFunction(string memory _method, address _callback, uint32 _amount, address _destination) private {
-        // https://ethereum.stackexchange.com/questions/9733/calling-function-from-deployed-contract
-        // https://stackoverflow.com/questions/54360047/calling-function-from-already-deployed-contract-in-solidity
-        // https://medium.com/@houzier.saurav/calling-functions-of-other-contracts-on-solidity-9c80eed05e0f
-        // https://ethereum.stackexchange.com/questions/64881/how-does-delegatecall-work-from-solidity-0-5-0-onwards
+    // ** CONTRACT LOGIC **//
+    function getMessage(uint64 _messageId) public view returns (uint256, address, address, uint64, string memory) {
+        Message memory message = messages[_messageId];
+        return (message.amount, message.callback, message.destination, message.id, message.method);
     }
-
+    
+    function getMessageOwner(
+        uint64 id
+    ) external view returns (address) {
+        address messageOwner = messageOwners[id];
+        return messageOwner;
+    }
 
 
     // ** MESSAGE RELAY FUNCTIONS ** //
@@ -102,8 +163,14 @@ contract AtlanticCallerV1 is ChainlinkClient, Math, Initializable {
     * @param _key The name of the key
     * @param _value The string value to add
     */
-    function add(uint64 _id, string memory _key, string memory _value) public view {
-        atlanticMessage.add(_id, _key, _value);
+    function addParam(
+        uint64 _id,
+        string memory _key,
+        string memory _value
+    ) external view messageOwner(_id) {
+        Message memory message = messages[_id];
+        message.params.encodeString(_key);
+        message.params.encodeString(_value);
     }
 
     /**
@@ -112,8 +179,14 @@ contract AtlanticCallerV1 is ChainlinkClient, Math, Initializable {
     * @param _key The name of the key
     * @param _value The bytes value to add
     */
-    function addBytes(uint64 _id, string memory _key, bytes memory _value) public view {
-        atlanticMessage.addBytes(_id, _key, _value);
+    function addBytesParam(
+        uint64 _id,
+        string memory _key,
+        bytes memory _value
+    ) external view messageOwner(_id) {
+        Message memory message = messages[_id];
+        message.params.encodeString(_key);
+        message.params.encodeBytes(_value);
     }
 
     /**
@@ -122,8 +195,14 @@ contract AtlanticCallerV1 is ChainlinkClient, Math, Initializable {
     * @param _key The name of the key
     * @param _value The int256 value to add
     */
-    function addInt(uint64 _id, string memory _key, int256 _value) public view {
-        atlanticMessage.addInt(_id, _key, _value);
+    function addIntParam(
+        uint64 _id,
+        string memory _key,
+        int256 _value
+    ) external view messageOwner(_id) {
+        Message memory message = messages[_id];
+        message.params.encodeString(_key);
+        message.params.encodeInt(_value);
     }
 
     /**
@@ -132,7 +211,51 @@ contract AtlanticCallerV1 is ChainlinkClient, Math, Initializable {
     * @param _key The name of the key
     * @param _value The uint256 value to add
     */
-    function addUint(uint64 _id, string memory _key, uint256 _value) public view {
-        atlanticMessage.addUint(_id, _key, _value);
+    function addUintParam(
+        uint64 _id,
+        string memory _key,
+        uint256 _value
+    ) external view messageOwner(_id) {
+        Message memory message = messages[_id];
+        message.params.encodeString(_key);
+        message.params.encodeUInt(_value);
+    }
+
+    /**
+    * @notice Adds an array of strings to the request with a given key name
+    * @param _id The id of the message
+    * @param _key The name of the key
+    * @param _values The array of string values to add
+    */
+    function addStringArrayParam(
+        uint64 _id,
+        string memory _key,
+        string[] memory _values
+    ) internal view messageOwner(_id) {
+        Message memory message = messages[_id];
+        message.params.encodeString(_key);
+        message.params.startArray();
+        for (uint256 i = 0; i < _values.length; i++) {
+            message.params.encodeString(_values[i]);
+        }
+        message.params.endSequence();
+    }
+
+
+    // ** MODIFIERS ** //
+    modifier validContract(address _contract) {
+        if(validContracts[_contract] == true) {
+            _;
+        }
+    }
+
+    modifier onlyOwner() {
+        require(msg.sender == owner);
+        _;
+    }
+
+    modifier messageOwner(uint64 _id) {
+        require(messageOwners[_id] == msg.sender, "Only the originator of the message can call a function with it.");
+        _;
     }
 }
