@@ -11,6 +11,7 @@ import "./AtlanticMessageV1.sol";
  *
  * [1] Chainlink fee should be covered in the smart contract.
  * [1a] Include a modifier that requires a payment for the message transfer.
+ * [2] Add requirement or method for the add params functions. More than likely needs to autogenerate key.
  */
 
 contract AtlanticCallerV1 is ChainlinkClient, Math, Initializable {
