@@ -44,11 +44,9 @@ contract AtlanticCallerV1 is ChainlinkClient, Math, Initializable {
 
     // ** CONSTRUCTOR ** //
     function initializable(
-        address _oracleAddress,
-        address _atlanticMessageContract
+        address _oracleAddress
     ) public initializer {
         setPublicChainlinkToken();
-        // atlanticMessage = AtlanticMessage(_atlanticMessageContract);
         fee = 1 * 10 ** 18;
         OracleAddress = _oracleAddress;
     }
@@ -164,7 +162,11 @@ contract AtlanticCallerV1 is ChainlinkClient, Math, Initializable {
     * @param _key The name of the key
     * @param _value The string value to add
     */
-    function add(uint64 _id, string memory _key, string memory _value) internal view {
+    function addParam(
+        uint64 _id,
+        string memory _key,
+        string memory _value
+    ) external view messageOwner(_id) {
         Message memory message = messages[_id];
         message.params.encodeString(_key);
         message.params.encodeString(_value);
@@ -176,7 +178,11 @@ contract AtlanticCallerV1 is ChainlinkClient, Math, Initializable {
     * @param _key The name of the key
     * @param _value The bytes value to add
     */
-    function addBytes(uint64 _id, string memory _key, bytes memory _value) internal view {
+    function addBytesParam(
+        uint64 _id,
+        string memory _key,
+        bytes memory _value
+    ) external view messageOwner(_id) {
         Message memory message = messages[_id];
         message.params.encodeString(_key);
         message.params.encodeBytes(_value);
@@ -188,7 +194,11 @@ contract AtlanticCallerV1 is ChainlinkClient, Math, Initializable {
     * @param _key The name of the key
     * @param _value The int256 value to add
     */
-    function addInt(uint64 _id, string memory _key, int256 _value) internal view {
+    function addIntParam(
+        uint64 _id,
+        string memory _key,
+        int256 _value
+    ) external view messageOwner(_id) {
         Message memory message = messages[_id];
         message.params.encodeString(_key);
         message.params.encodeInt(_value);
@@ -200,7 +210,11 @@ contract AtlanticCallerV1 is ChainlinkClient, Math, Initializable {
     * @param _key The name of the key
     * @param _value The uint256 value to add
     */
-    function addUint(uint64 _id, string memory _key, uint256 _value) internal view {
+    function addUintParam(
+        uint64 _id,
+        string memory _key,
+        uint256 _value
+    ) external view messageOwner(_id) {
         Message memory message = messages[_id];
         message.params.encodeString(_key);
         message.params.encodeUInt(_value);
@@ -212,7 +226,11 @@ contract AtlanticCallerV1 is ChainlinkClient, Math, Initializable {
     * @param _key The name of the key
     * @param _values The array of string values to add
     */
-    function addStringArray(uint64 _id, string memory _key, string[] memory _values) internal view {
+    function addStringArrayParam(
+        uint64 _id,
+        string memory _key,
+        string[] memory _values
+    ) internal view messageOwner(_id) {
         Message memory message = messages[_id];
         message.params.encodeString(_key);
         message.params.startArray();
