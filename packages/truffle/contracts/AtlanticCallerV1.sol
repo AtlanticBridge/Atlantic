@@ -165,8 +165,8 @@ contract AtlanticCallerV1 is ChainlinkClient, Math, Initializable {
     */
     function addParam(
         uint64 _id,
-        string memory _key,
-        string memory _value
+        string calldata _key,
+        string calldata _value
     ) external view messageOwner(_id) {
         Message memory message = messages[_id];
         message.params.encodeString(_key);
@@ -181,8 +181,8 @@ contract AtlanticCallerV1 is ChainlinkClient, Math, Initializable {
     */
     function addBytesParam(
         uint64 _id,
-        string memory _key,
-        bytes memory _value
+        string calldata _key,
+        bytes calldata _value
     ) external view messageOwner(_id) {
         Message memory message = messages[_id];
         message.params.encodeString(_key);
@@ -197,7 +197,7 @@ contract AtlanticCallerV1 is ChainlinkClient, Math, Initializable {
     */
     function addIntParam(
         uint64 _id,
-        string memory _key,
+        string calldata _key,
         int256 _value
     ) external view messageOwner(_id) {
         Message memory message = messages[_id];
@@ -213,7 +213,7 @@ contract AtlanticCallerV1 is ChainlinkClient, Math, Initializable {
     */
     function addUintParam(
         uint64 _id,
-        string memory _key,
+        string calldata _key,
         uint256 _value
     ) external view messageOwner(_id) {
         Message memory message = messages[_id];
