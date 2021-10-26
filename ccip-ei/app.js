@@ -5,6 +5,11 @@ var app = express();
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 
+
+var Web3 = require('web3')
+
+require('dotenv').config()
+
 //Define some constants
 const CHAINLINK_ACCESS_KEY = ""
 const CHAINLINK_ACCESS_SECRET = ""
