@@ -8,7 +8,7 @@ import "./AtlanticMessageV1.sol";
 
 contract AtlanticCallerV1 is ChainlinkClient, Math, Initializable {
 
-    // ** CONTRACT FUNCTIONS ** //
+    // ** CONTRACT VARIABLES ** //
     uint256 fee;
     bytes32 jobId;
     address OracleAddress;
@@ -20,7 +20,7 @@ contract AtlanticCallerV1 is ChainlinkClient, Math, Initializable {
         address _atlanticMessageContract
     ) public initializer {
         setPublicChainlinkToken();
-        atlanticMessage = AtlanticMessage(_atlanticMessageContract);
+        atlanticMessage = AtlanticMessageV1(_atlanticMessageContract);
         fee = 1 * 10 ** 18;
         OracleAddress = _oracleAddress;
     }
@@ -41,7 +41,7 @@ contract AtlanticCallerV1 is ChainlinkClient, Math, Initializable {
     function callFunction(uint64 _messageId, string memory _chainId) public {
         require(atlanticMessage.getMessageOwner(_messageId) == msg.sender, "Only the originator of the message can call a function with it.");
         // Message memory message = messages[_id];
-        AtlanticMessage.Message memory message = atlanticMessage.getMessage(_messageId);
+        Message memory message = atlanticMessage.getMessage(_messageId);
         sendToRemoteChain(_chainId, message);
     }
 
@@ -53,7 +53,7 @@ contract AtlanticCallerV1 is ChainlinkClient, Math, Initializable {
         jobId = stringToBytes32(_jobId);
     }
 
-    function sendToRemoteChain(string memory _chainId, AtlanticMessage.Message memory _message) private {
+    function sendToRemoteChain(string memory _chainId, AtlanticMessageV1.Message memory _message) private {
         // Send data to Chainlink node/CCIP however necessary
         Chainlink.Request memory request = buildChainlinkRequest(jobId, address(this), this.fulfill.selector);
 
@@ -74,7 +74,7 @@ contract AtlanticCallerV1 is ChainlinkClient, Math, Initializable {
     */
     function fulfill(bytes32 _requestId, uint64 _messageId) public recordChainlinkFulfillment(_requestId)
     {
-        AtlanticMessage.Message memory message = atlanticMessage.messages[_messageId];
+        AtlanticMessageV1.Message memory message = atlanticMessage.messages[_messageId];
         emit MessageSuccess(message.id, message.method, message.callback, message.amount, message.destination);
     }
 
