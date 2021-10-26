@@ -45,7 +45,7 @@ contract AtlanticReceiverV1 is Math {
         return (message.amount, message.callback, message.destination, message.id, message.method);
     }
 
-    function getMessage(uint64 _messageId) public view returns (Message calldata) {
+    function getMessage(uint64 _messageId) public view returns (Message memory) {
         Message memory message = messages[_messageId];
         return message;
     }
