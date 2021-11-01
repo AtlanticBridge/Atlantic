@@ -12,25 +12,11 @@ const init = async () => {
     WsAtlanticReceiverContract.events.FunctionExecuted()
       .on('data', event => {
         console.log('The event: ', event)
-        callChainlinkNode("")
       })
       .on('changed', changed => console.log('The changed: ', changed))
       .on('error', err => console.error('The error: ', err))
       .on('connected', str => console.log('The string: ', str))
 }
 
-init()
 
-/** Function to call the chainlink node and run a job */
-function callChainlinkNode(job_id) {
-    var url_addon = '/v2/specs/'+ job_id + '/runs'
-    request.post({
-        headers: {'content-type' : 'application/json', 'X-Chainlink-EA-AccessKey': CHAINLINK_ACCESS_KEY,
-        'X-Chainlink-EA-Secret': CHAINLINK_ACCESS_SECRET},
-        url:     CHAINLINK_IP+url_addon,
-        body:    ""
-      }, function(error, response, body){
-        updateCurrentActiveJob()
-      });
-    console.log("Job Sent")
-}
+init()
