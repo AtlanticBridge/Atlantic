@@ -1,7 +1,0 @@
-node_modules/
-package-lock.json
-*.zip
-secrets.txt
-.env-change
-.env
-dist
