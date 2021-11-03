@@ -6,14 +6,8 @@ import Web3 from "web3";
 import { config } from "dotenv";
 import { callbackEth } from "./callback/eth.callback";
 import receiveMessageAbi from "./abi/ReceiveMessage.json";
-// import { AccountsBase } from 'web3-core';
-// import Accounts from 'web3-eth-accounts';
 
-// declare module 'web3-eth-accounts' {
-//   export default class Accounts extends AccountsBase {}
-// }
 config();
-const port = process.env.EA_PORT || 8081;
 const web3BscProviderWs = new Web3(new Web3.providers.WebsocketProvider(process.env.BSC_TESTNET_MORALIS_WS as string));
 const wsAtlanticReceiverContract = new web3BscProviderWs.eth.Contract(
   receiveMessageAbi.abi as any,
@@ -28,7 +22,7 @@ const startServer = async () => {
   app.use('/', routes);
 
   app.listen(process.env.PORT || 8081, () => {
-    console.log('Listening on port: ', process.env.PORT || 8081);
+    console.log('Express Server Listening on PORT: ', process.env.PORT || 8081);
   });
 };
 
@@ -42,7 +36,7 @@ const init = async () => {
     })
     .on('changed', (changed: any) => console.log('The changed: ', changed))
     .on('error', (err: any) => console.error('The error: ', err))
-    .on('connected', (str: any) => console.log('The address: ', str));
+    .on('connected', (str: any) => console.log(`Connected to Smart Contract | ${str} | on Binance Smart Chain Testnet`));
 };
 
 init();

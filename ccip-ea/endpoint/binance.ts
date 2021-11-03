@@ -1,5 +1,4 @@
 import Web3 from "web3";
-import { Accounts } from "web3-eth-accounts";
 import { config } from "dotenv";
 
 config();
