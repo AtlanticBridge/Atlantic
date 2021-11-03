@@ -1,0 +1,9 @@
+type = "directrequest"
+name = "receive message request event"
+schemaVersion = 1
+# externalJobID =
+observationSource = """
+
+"""
+maxTaskDuration =
+directrequest =
