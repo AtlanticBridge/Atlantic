@@ -25,9 +25,9 @@ init()
 function callChainlinkNode(job_id) {
     var url_addon = '/v2/specs/'+ job_id + '/runs'
     request.post({
-        headers: {'content-type' : 'application/json', 'X-Chainlink-EA-AccessKey': CHAINLINK_ACCESS_KEY,
-        'X-Chainlink-EA-Secret': CHAINLINK_ACCESS_SECRET},
-        url:     CHAINLINK_IP+url_addon,
+        headers: {'content-type' : 'application/json', 'X-Chainlink-EA-AccessKey': process.env.CHAINLINK_ACCESS_KEY,
+        'X-Chainlink-EA-Secret': process.env.CHAINLINK_ACCESS_SECRET},
+        url:     process.env.CHAINLINK_IP+url_addon,
         body:    ""
       }, function(error, response, body){
         updateCurrentActiveJob()
