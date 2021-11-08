@@ -4,11 +4,15 @@ pragma solidity >=0.6.0;
 import "./utils/Math.sol";
 import "@chainlink/contracts/src/v0.6/vendor/BufferChainlink.sol";
 import "@chainlink/contracts/src/v0.6/vendor/CBORChainlink.sol";
+import "@openzeppelin/contracts/access/AccessControl.sol";
 
-contract AtlanticReceiverV1 is Math {
+contract AtlanticReceiverV1 is Math, AccessControl {
 
     using CBORChainlink for BufferChainlink.buffer;
-    // using Chainlink for Chainlink.Request;
+
+    // ** SET ROLES ** //
+    bytes32 public constant OWNER_ROLE = keccak256("OWNER_ROLE");
+    bytes32 public constant MESSAGE_OWNER_ROLE = keccak256("MESSAGE_OWNER_ROLE");
 
     struct Message {
         uint64 id;
@@ -38,16 +42,14 @@ contract AtlanticReceiverV1 is Math {
 
     //** CONTRACT EVENTS **//
     event FunctionExecuted(string _method, address _callback, uint32 _amount, address _destination);
+    event SuccessfulCall(bool success, bytes returnData);
 
     // ** CONTRACT LOGIC **//
-    function get1Message(uint64 _messageId) public view returns (uint256, address, address, uint64, string memory) {
+    function getMessage(
+        uint64 _messageId
+    ) public view returns (uint32, address, address, uint64, string memory) {
         Message memory message = messages[_messageId];
         return (message.amount, message.callback, message.destination, message.id, message.method);
-    }
-
-    function getMessage(uint64 _messageId) public view returns (Message memory) {
-        Message memory message = messages[_messageId];
-        return message;
     }
 
     // ** INBOUND LOGIC **//
@@ -69,23 +71,20 @@ contract AtlanticReceiverV1 is Math {
         message.destination = _destination;
         messages[_id] = message;
 
+        emit FunctionExecuted(message.method, message.callback, message.amount, message.destination);
+
         // ** EXECUTE FUNCTION ** //
-        if (keccak256(abi.encodePacked(message.method)) == keccak256(abi.encodePacked("executeFunction"))) {
-            executeFunction(message);
-        }
-        
-        if (keccak256(abi.encodePacked(message.method)) == keccak256(abi.encodePacked("executeFunctionTwo"))) {
-            executeFunctionTwo(message);
-        }
+
+        bytes memory payload = abi.encodeWithSignature("setFoo(uint)", 12);
+        (bool success, bytes memory returnData) = address(_destination).call(payload);
+        emit SuccessfulCall(success, returnData);
+        require(success);
     }
 
-    function executeFunction(Message memory message) private {
-        emit FunctionExecuted(message.method, message.callback, message.amount, message.destination);
-    }
-
-    function executeFunctionTwo(Message memory message) private {
-        emit FunctionExecuted(message.method, message.callback, message.amount, message.destination);
-    }
+    /**
+        Create a callback function that emits an event that should be transmitted.
+     */
+    
 
     //** CONTRACT GOVERNANCE **//
     function setOwner(address _address) external {
