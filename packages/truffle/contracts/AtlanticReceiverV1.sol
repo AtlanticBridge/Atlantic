@@ -43,6 +43,7 @@ contract AtlanticReceiverV1 is Math, AccessControl {
     //** CONTRACT EVENTS **//
     event FunctionExecuted(string _method, address _callback, uint32 _amount, address _destination);
     event SuccessfulCall(bool success, bytes returnData);
+    event CallbackMessage(bytes success, uint256 returnData, uint64 messageId);
 
     // ** CONTRACT LOGIC **//
     function getMessage(
@@ -81,10 +82,14 @@ contract AtlanticReceiverV1 is Math, AccessControl {
         require(success);
     }
 
+
+    // ** OUTBOUND FUNCTIONS **//
     /**
         Create a callback function that emits an event that should be transmitted.
      */
-    
+    function sendCallback(bytes memory bufMessage, uint256 size, uint64 messageId) public {
+        emit CallbackMessage(bufMessage, size, messageId);
+    }
 
     //** CONTRACT GOVERNANCE **//
     function setOwner(address _address) external {
