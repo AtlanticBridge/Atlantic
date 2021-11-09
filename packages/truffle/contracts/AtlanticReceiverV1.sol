@@ -54,7 +54,6 @@ contract AtlanticReceiverV1 is Math, AccessControl {
     }
 
     // ** INBOUND LOGIC **//
-
     function receiveFromRemoteChain(
         string memory _method,
         address _callback,
@@ -87,8 +86,8 @@ contract AtlanticReceiverV1 is Math, AccessControl {
     /**
         Create a callback function that emits an event that should be transmitted.
      */
-    function sendCallback(bytes memory bufMessage, uint256 size, uint64 messageId) public {
-        emit CallbackMessage(bufMessage, size, messageId);
+    function sendCallback(bytes memory bufMessage, uint256 capacity, uint64 _id) public {
+        emit CallbackMessage(bufMessage, capacity, _id);
     }
 
     //** CONTRACT GOVERNANCE **//

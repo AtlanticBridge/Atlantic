@@ -9,100 +9,110 @@ library AtlanticMessageBuilderV1 {
 
     using CBORChainlink for BufferChainlink.buffer;
     
-    struct Message {
+    struct CallbackMessage {
+        uint64 id;
         uint capacity;
-        bytes buf;
-    }
-
-    // ** MESSAGE RELAY FUNCTIONS ** //
-    /**
-    * @notice Adds a string value to the request with a given key name
-    * @param _id The id of the messages
-    * @param _key The name of the key
-    * @param _value The string value to add
-    */
-    function addParam(
-        uint64 _id,
-        string calldata _key,
-        string calldata _value
-    ) external view messageOwner(_id) {
-        Message memory message = messages[_id];
-        message.params.encodeString(_key);
-        message.params.encodeString(_value);
+        BufferChainlink.buffer buf;
     }
 
     /**
-    * @notice Adds a bytes value to the request with a given key name
-    * @param _id The id of the message
-    * @param _key The name of the key
-    * @param _value The bytes value to add
-    */
-    function addBytesParam(
-        uint64 _id,
-        string calldata _key,
-        bytes calldata _value
-    ) external view messageOwner(_id) {
-        Message memory message = messages[_id];
-        message.params.encodeString(_key);
-        message.params.encodeBytes(_value);
-    }
+     * @notice Initializes a Chainlink request
+     * @dev Sets the ID, callback address, and callback function signature on the request
+     * @param self The uninitialized request
+     * @param _id The Job Specification ID
+     * @return The initialized request
+     */
+  function initialize(
+    CallbackMessage memory self,
+    uint64 _id,
+    uint _capacity
+  ) internal pure returns (AtlanticMessageBuilderV1.CallbackMessage memory) {
+    BufferChainlink.init(self.buf, defaultBufferSize);
+    self.id = _id;
+    self.capacity = _capacity;
+    // self.callbackFunctionId = _callbackFunction;
+    return self;
+  }
 
-    /**
-    * @notice Adds a int256 value to the request with a given key name
-    * @param _id The id of the message
-    * @param _key The name of the key
-    * @param _value The int256 value to add
-    */
-    function addIntParam(
-        uint64 _id,
-        string calldata _key,
-        int256 _value
-    ) external view messageOwner(_id) {
-        Message memory message = messages[_id];
-        message.params.encodeString(_key);
-        message.params.encodeInt(_value);
-    }
+  /**
+   * @notice Sets the data for the buffer without encoding CBOR on-chain
+   * @dev CBOR can be closed with curly-brackets {} or they can be left off
+   * @param self The initialized request
+   * @param _data The CBOR data
+   */
+  function setBuffer(CallbackMessage memory self, bytes memory _data)
+    internal pure
+  {
+    BufferChainlink.init(self.buf, _data.length);
+    BufferChainlink.append(self.buf, _data);
+  }
 
-    /**
-    * @notice Adds a uint256 value to the request with a given key name
-    * @param _id The id of the message
-    * @param _key The name of the key
-    * @param _value The uint256 value to add
-    */
-    function addUintParam(
-        uint64 _id,
-        string calldata _key,
-        uint256 _value
-    ) external view messageOwner(_id) {
-        Message memory message = messages[_id];
-        message.params.encodeString(_key);
-        message.params.encodeUInt(_value);
-    }
+  /**
+   * @notice Adds a string value to the request with a given key name
+   * @param self The initialized request
+   * @param _key The name of the key
+   * @param _value The string value to add
+   */
+  function add(CallbackMessage memory self, string memory _key, string memory _value)
+    internal pure
+  {
+    self.buf.encodeString(_key);
+    self.buf.encodeString(_value);
+  }
 
-    /**
-    * @notice Adds an array of strings to the request with a given key name
-    * @param _id The id of the message
-    * @param _key The name of the key
-    * @param _values The array of string values to add
-    */
-    function addStringArrayParam(
-        uint64 _id,
-        string memory _key,
-        string[] memory _values
-    ) internal view messageOwner(_id) {
-        Message memory message = messages[_id];
-        message.params.encodeString(_key);
-        message.params.startArray();
-        for (uint256 i = 0; i < _values.length; i++) {
-            message.params.encodeString(_values[i]);
-        }
-        message.params.endSequence();
-    }
+  /**
+   * @notice Adds a bytes value to the request with a given key name
+   * @param self The initialized request
+   * @param _key The name of the key
+   * @param _value The bytes value to add
+   */
+  function addBytes(CallbackMessage memory self, string memory _key, bytes memory _value)
+    internal pure
+  {
+    self.buf.encodeString(_key);
+    self.buf.encodeBytes(_value);
+  }
 
+  /**
+   * @notice Adds a int256 value to the request with a given key name
+   * @param self The initialized request
+   * @param _key The name of the key
+   * @param _value The int256 value to add
+   */
+  function addInt(CallbackMessage memory self, string memory _key, int256 _value)
+    internal pure
+  {
+    self.buf.encodeString(_key);
+    self.buf.encodeInt(_value);
+  }
 
-    // ** MODIFIERS ** //
-    modifier messageOwner(uint64 _id, address _messageOwner) {
-        require(_messageOwner == msg.sender, "Only the originator of the message can call a function with it.");
-        _;
+  /**
+   * @notice Adds a uint256 value to the request with a given key name
+   * @param self The initialized request
+   * @param _key The name of the key
+   * @param _value The uint256 value to add
+   */
+  function addUint(CallbackMessage memory self, string memory _key, uint256 _value)
+    internal pure
+  {
+    self.buf.encodeString(_key);
+    self.buf.encodeUInt(_value);
+  }
+
+  /**
+   * @notice Adds an array of strings to the request with a given key name
+   * @param self The initialized request
+   * @param _key The name of the key
+   * @param _values The array of string values to add
+   */
+  function addStringArray(CallbackMessage memory self, string memory _key, string[] memory _values)
+    internal pure
+  {
+    self.buf.encodeString(_key);
+    self.buf.startArray();
+    for (uint256 i = 0; i < _values.length; i++) {
+      self.buf.encodeString(_values[i]);
     }
+    self.buf.endSequence();
+  }
 }
