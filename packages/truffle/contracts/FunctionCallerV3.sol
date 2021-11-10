@@ -2,7 +2,7 @@
 pragma solidity >=0.6.0;
 
 import "@chainlink/contracts/src/v0.6/ChainlinkClient.sol";
-import "./Math.sol";
+import "./utils/Math.sol";
 
 contract FunctionCallerV3 is ChainlinkClient, Math {
 
@@ -214,8 +214,8 @@ contract FunctionCallerV3 is ChainlinkClient, Math {
 
     function executeFunction(string memory _method, address _callback, uint32 _amount, address _destination) private {
         // contract_address.call.value(1 ether).gas(10)(abi.encodeWithSignature("register(string)", "MyName"));
-        address dest = _destination;
-        dest.call.value(1 ether).gas(10)(abi.encodeWithSignature("setFoo", 99));
+        // address dest = _destination;
+        // dest.call.value(1 ether).gas(10)(abi.encodeWithSignature("setFoo", 99));
         // https://ethereum.stackexchange.com/questions/9733/calling-function-from-deployed-contract
         // https://stackoverflow.com/questions/54360047/calling-function-from-already-deployed-contract-in-solidity
         // https://medium.com/@houzier.saurav/calling-functions-of-other-contracts-on-solidity-9c80eed05e0f
