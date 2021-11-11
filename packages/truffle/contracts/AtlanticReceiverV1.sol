@@ -43,7 +43,7 @@ contract AtlanticReceiverV1 is Math, AccessControl {
     //** CONTRACT EVENTS **//
     event FunctionExecuted(string _method, address _callback, uint32 _amount, address _destination);
     event SuccessfulCall(bool success, bytes returnData);
-    event CallbackMessage(bytes success, uint256 returnData, uint64 messageId);
+    event CallbackMessage(bytes _message, uint256 _capacity, uint64 _messageId);
 
     // ** CONTRACT LOGIC **//
     function getMessage(

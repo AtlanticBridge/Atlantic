@@ -80,6 +80,11 @@ contract AtlanticCallerV1 is ChainlinkClient, Math, Initializable {
         jobId = stringToBytes32(_jobId);
     }
 
+    function sendCallback(bytes memory _message, uint64 _capacity, uint64 _messageId) public view {
+        Message memory message = messages[_messageId];
+        // Call the 
+    }
+
     function sendToRemoteChain(string memory _chainId, Message memory _message) private {
         // Send data to Chainlink node/CCIP however necessary
         Chainlink.Request memory request = buildChainlinkRequest(jobId, address(this), this.fulfill.selector);
