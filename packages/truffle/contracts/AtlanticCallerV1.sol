@@ -4,7 +4,6 @@ pragma solidity >=0.6.0;
 import "@chainlink/contracts/src/v0.6/ChainlinkClient.sol";
 import "@openzeppelin/contracts/proxy/Initializable.sol";
 import "./utils/Math.sol";
-import "./AtlanticMessageV1.sol";
 
 /**
  * TODO Items:
@@ -41,7 +40,6 @@ contract AtlanticCallerV1 is ChainlinkClient, Math, Initializable {
     uint256 fee;
     bytes32 jobId;
     address OracleAddress;
-    AtlanticMessageV1 atlanticMessage;
 
     // ** CONSTRUCTOR ** //
     function initializable(
@@ -67,7 +65,7 @@ contract AtlanticCallerV1 is ChainlinkClient, Math, Initializable {
     }
     
     function callFunction(uint64 _messageId, string memory _chainId) public {
-        require(atlanticMessage.getMessageOwner(_messageId) == msg.sender, "Only the originator of the message can call a function with it.");
+        require(getMessageOwner(_messageId) == msg.sender, "Only the originator of the message can call a function with it.");
         Message memory message = messages[_messageId];
         sendToRemoteChain(_chainId, message);
     }
@@ -155,7 +153,7 @@ contract AtlanticCallerV1 is ChainlinkClient, Math, Initializable {
     
     function getMessageOwner(
         uint64 id
-    ) external view returns (address) {
+    ) public view returns (address) {
         address messageOwner = messageOwners[id];
         return messageOwner;
     }
