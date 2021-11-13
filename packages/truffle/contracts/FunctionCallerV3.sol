@@ -80,9 +80,16 @@ contract FunctionCallerV3 is ChainlinkClient, Math {
     }
 
     // ** CONTRACT LOGIC **//
-    function getMessage(uint64 _messageId) public view returns (uint256, address, address, uint64, string memory) {
+    function getMessage(uint64 _messageId) public view returns (address) {
         Message memory message = messages[_messageId];
-        return (message.amount, message.callback, message.destination, message.id, message.method);
+        return message.destination;
+    }
+
+    function getParams(uint64 _messageId) public view returns (bytes memory) {
+        Message memory message = messages[_messageId];
+        string memory test = string(abi.encodePacked(message.buf.buf));
+        bytes memory testb = abi.encodePacked(message.buf.buf);
+        return testb;
     }
     
     function getMessageOwner(uint64 id) public view returns (address) {
@@ -107,10 +114,11 @@ contract FunctionCallerV3 is ChainlinkClient, Math {
     * @param _key The name of the key
     * @param _value The string value to add
     */
-    function add(uint64 _id, string memory _key, string memory _value) internal view {
+    function add(uint64 _id, string memory _key, string memory _value) public {
         Message memory message = messages[_id];
         message.buf.encodeString(_key);
         message.buf.encodeString(_value);
+        messages[_id] = message;
     }
 
     /**
@@ -131,10 +139,11 @@ contract FunctionCallerV3 is ChainlinkClient, Math {
     * @param _key The name of the key
     * @param _value The int256 value to add
     */
-    function addInt(uint64 _id, string memory _key, int256 _value) internal view {
+    function addInt(uint64 _id, string memory _key, int256 _value) public {
         Message memory message = messages[_id];
         message.buf.encodeString(_key);
         message.buf.encodeInt(_value);
+        messages[_id] = message;
     }
 
     /**
@@ -212,14 +221,12 @@ contract FunctionCallerV3 is ChainlinkClient, Math {
         executeFunction(_method, _callback, _amount, _destination);
     }
 
-    function executeFunction(string memory _method, address _callback, uint32 _amount, address _destination) private {
-        // contract_address.call.value(1 ether).gas(10)(abi.encodeWithSignature("register(string)", "MyName"));
-        // address dest = _destination;
-        // dest.call.value(1 ether).gas(10)(abi.encodeWithSignature("setFoo", 99));
-        // https://ethereum.stackexchange.com/questions/9733/calling-function-from-deployed-contract
-        // https://stackoverflow.com/questions/54360047/calling-function-from-already-deployed-contract-in-solidity
-        // https://medium.com/@houzier.saurav/calling-functions-of-other-contracts-on-solidity-9c80eed05e0f
-        // https://ethereum.stackexchange.com/questions/64881/how-does-delegatecall-work-from-solidity-0-5-0-onwards
+    function executeFunction(string memory _method, address _callback, uint32 _amount, address _destination) private returns(bool, bytes memory) {
+        address dest = _destination;  
+        bytes memory data;
+        bool outcome;
+        (outcome, data) = dest.call(abi.encodeWithSignature("setFoo(uint32)", 99));
+        return (outcome, data);
     }
 
     //** CONTRACT GOVERNANCE **//
@@ -230,5 +237,8 @@ contract FunctionCallerV3 is ChainlinkClient, Math {
 
     function getOwner() external view returns(address) {
         return owner;
+    }
+
+    fallback() external payable {
     }
 }

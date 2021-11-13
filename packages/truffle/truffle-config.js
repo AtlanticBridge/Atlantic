@@ -16,7 +16,8 @@ module.exports = {
       network_id: "*",
       websockets: true,
       gas: 4712388,
-      gasPrice: 1000000000000
+      gasPrice: 1000000000000,
+      from: '0xdeA065D5E5ac17148407262001baF06BD73B21a5'
     },
     develop: {
       host: "127.0.0.1",
