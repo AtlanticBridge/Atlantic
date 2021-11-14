@@ -152,7 +152,7 @@ contract FunctionCallerV3 is ChainlinkClient, Math {
     * @param _key The name of the key
     * @param _value The uint256 value to add
     */
-    function addUint(uint64 _id, string memory _key, uint256 _value) internal view {
+    function addUint(uint64 _id, string memory _key, uint256 _value) public {
         Message memory message = messages[_id];
         message.buf.encodeString(_key);
         message.buf.encodeUInt(_value);
@@ -164,7 +164,7 @@ contract FunctionCallerV3 is ChainlinkClient, Math {
     * @param _key The name of the key
     * @param _values The array of string values to add
     */
-    function addStringArray(uint64 _id, string memory _key, string[] memory _values) internal view {
+    function addStringArray(uint64 _id, string memory _key, string[] memory _values) public {
         Message memory message = messages[_id];
         message.buf.encodeString(_key);
         message.buf.startArray();

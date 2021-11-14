@@ -44,9 +44,11 @@ contract("Test FunctionCallerV3 contract", async accounts => {
             10, 
             '0x9f8f72aa9304c8b593d555f12ef6589cc3a579a2'
         )
-        await funcCallerInstance.add(1, "s", "value1");
-        await funcCallerInstance.addInt(1, "uint", 10)
-        // await funcCallerInstance.add(1, "param3", "value3");
+        // await funcCallerInstance.add(1, "qwertyuioplkjhdwadadwadwadwdadwadt", "value1");
+        await funcCallerInstance.addStringArray(1, "param3", ['hello']);
+        // await funcCallerInstance.addBytes(1, "param3", "value3");
+        // await funcCallerInstance.addUint(1, "param3", "value3");
+        // await funcCallerInstance.addStringArray(1, "param3", "value3");
         const params = await funcCallerInstance.getParams(1);
         const destination = await funcCallerInstance.getMessage(1);
         console.log(destination)

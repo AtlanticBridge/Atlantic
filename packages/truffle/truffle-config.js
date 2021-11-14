@@ -17,7 +17,7 @@ module.exports = {
       websockets: true,
       gas: 4712388,
       gasPrice: 1000000000000,
-      from: '0xdeA065D5E5ac17148407262001baF06BD73B21a5'
+      from: '0x68454a0c713fd26ba2DCAbA3551072377Da81317'
     },
     develop: {
       host: "127.0.0.1",
