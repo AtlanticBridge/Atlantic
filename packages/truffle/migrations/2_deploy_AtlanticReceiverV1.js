@@ -1,5 +1,6 @@
 const TestContract = artifacts.require("TestContract")
 const AtlanticReceiverV1 = artifacts.require("AtlanticReceiverV1")
+const FunctionCallerV3 = artifacts.require("FunctionCallerV3")
 
 var fs = require("fs")
 
@@ -98,15 +99,14 @@ module.exports = async function(deployer, network, accounts) {
         "addresses": accounts
     }
     var jsonData = JSON.stringify(data);
-        fs.writeFileSync("outputs/6_bsc-testnet_ccip.json", jsonData, function(err) {
-            if (err) {
-                console.log(err);
-            }
-        });
-    } 
+    fs.writeFileSync("outputs/6_bsc-testnet_ccip.json", jsonData, function(err) {
+        if (err) {
+            console.log(err);
+        }
+    });
         
     if (network == "ganache") {
         deployer.deploy(TestContract)
-        deployer.deploy(FunctionCallerV3, '0xde0b295669a9fd93d5f28d9ec85e40f4cb697bae');
+        deployer.deploy(AtlanticReceiverV1);
     }
 }
