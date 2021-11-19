@@ -63,12 +63,12 @@ contract AtlanticCBOR {
         }
     }
 
-    function processDecoding(bytes calldata working_object, uint8 input_signifiers, uint8 extra_length, bool _string) public returns (bytes calldata new_working_object) {
+    function processDecoding(bytes calldata working_object, uint8 input_signifiers, uint8 extra_length, bool _string) pure public returns (bytes calldata new_working_object) {
         uint256 hex_length = 0;
         if ((uint8(working_object[1]) - 7) > 0) {
             hex_length = 2 ** (uint8(working_object[1]) - 7);
         }
-        uint8 input_length = uint8(working_object[input_signifiers]) + extra_length + hex_length;
+        uint8 input_length = uint8(working_object[input_signifiers]) + extra_length + uint8(hex_length);
         bytes memory input = bytes(working_object[1 + input_signifiers: 1 + input_signifiers + input_length]);
         if (_string) {
             decodeString(input);
