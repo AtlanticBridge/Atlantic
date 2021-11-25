@@ -4,6 +4,7 @@ import { ChainlinkContractsComponent } from './pages/chainlink-contracts/chainli
 import { EthStablecoinComponent } from './pages/eth-stablecoin/eth-stablecoin.component';
 import { HomeComponent } from './pages/home/home.component';
 import { WalletInformationComponent } from './pages/wallet-information/wallet-information.component';
+import { OverviewComponent } from './pages/overview/overview.component';
 
 
 const routes: Routes = [
@@ -12,6 +13,13 @@ const routes: Routes = [
     component: HomeComponent,
     data: {
       title: 'Home Component'
+    }
+  },
+  {
+    path: 'overview',
+    component: OverviewComponent,
+    data: {
+      title: 'Overview Component'
     }
   },
   {

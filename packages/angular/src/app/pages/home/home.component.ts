@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { base64 } from 'ethers/lib/utils';
 import { FunctionCallerV3Injectable } from "../../core/injectables/contract-injectables/function-callerV3.injectable";
-import { ReceiveMessageInjectable } from "../../core/injectables/contract-injectables/receive-message.injectable";
+// import { ReceiveMessageInjectable } from "../../core/injectables/contract-injectables/receive-message.injectable";
 
 
 interface EthMessage {
@@ -31,7 +31,7 @@ export class HomeComponent implements OnInit {
 
   constructor(
     private functionCallerV3Injectable: FunctionCallerV3Injectable,
-    private receiveMessageInjectable: ReceiveMessageInjectable,
+    // private receiveMessageInjectable: ReceiveMessageInjectable,
     private formBuilder: FormBuilder
   ) {
     this.functionCallerV3Injectable.on("MessageId", (_id) => {
@@ -152,7 +152,7 @@ export class HomeComponent implements OnInit {
 
   // ** BINANCE FUNCTIONS ** //
   private async getBscMessage(_messageId: number) {
-    this.bscMessage = await this.receiveMessageInjectable.getMessage(_messageId);
+    // this.bscMessage = await this.receiveMessageInjectable.getMessage(_messageId);
     this.bscMessageInterface.amount = parseInt(this.bscMessage[0], 16);
     this.bscMessageInterface.callback = this.bscMessage[1];
     this.bscMessageInterface.destination = this.bscMessage[2];

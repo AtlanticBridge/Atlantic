@@ -10,7 +10,7 @@ import { environment } from "../../../environments/environment";
 export class WalletInformationComponent implements OnInit {
 
   constructor() {
-    var wsProvider = new providers.WebSocketProvider(environment.Ws_Moralis_Bsc_Testnet)
+    // var wsProvider = new providers.WebSocketProvider(environment.Ws_Moralis_Bsc_Testnet)
     var filter = {
       address: '0xEaed3B434d0FFf6D6d7AA80D72a3B47dD86A3617',
       topics: [
@@ -18,9 +18,9 @@ export class WalletInformationComponent implements OnInit {
       ]
     }
 
-    wsProvider.on(filter, (event) => {
-      console.log(event)
-    })
+    // wsProvider.on(filter, (event) => {
+    //   console.log(event)
+    // })
   }
 
   ngOnInit(): void {
