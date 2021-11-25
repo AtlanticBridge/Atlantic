@@ -16,6 +16,11 @@ import { WalletInformationComponent }  from './pages/wallet-information/wallet-i
 import { ChainlinkContractsComponent } from './pages/chainlink-contracts/chainlink-contracts.component';
 import { HomeComponent }               from './pages/home/home.component';
 import { EthStablecoinComponent }      from './pages/eth-stablecoin/eth-stablecoin.component';
+import { OverviewComponent } from './pages/overview/overview.component';
+import { TheTeamComponent } from './pages/the-team/the-team.component';
+import { AtlanticTokenComponent } from './pages/atlantic-token/atlantic-token.component';
+import { FaqComponent } from './pages/faq/faq.component';
+import { RoadmapComponent } from './pages/roadmap/roadmap.component';
 
 
 
@@ -27,7 +32,12 @@ import { EthStablecoinComponent }      from './pages/eth-stablecoin/eth-stableco
     WalletInformationComponent,
     ChainlinkContractsComponent,
     HomeComponent,
-    EthStablecoinComponent
+    EthStablecoinComponent,
+    OverviewComponent,
+    TheTeamComponent,
+    AtlanticTokenComponent,
+    FaqComponent,
+    RoadmapComponent
   ],
   imports: [
     BrowserModule,

@@ -32,6 +32,40 @@
         <mat-nav-list>
 
             <mat-list-item class="{{contractRouteStyle}}" routerLink="/">
+                <button mat-button [matMenuTriggerFor]="aboutMenu">About Atlantic</button>
+                <mat-menu #aboutMenu="matMenu">
+                    <button mat-menu-item routerLink="/overview">Overview</button>
+                    <button mat-menu-item>Use Cases</button>
+                    <button mat-menu-item>Atlantic Token</button>
+                    <button mat-menu-item>Roadmap</button>
+                    <button mat-menu-item>Message Market</button>
+                    <button mat-menu-item>The Team</button>
+                    <button mat-menu-item>FAQ</button>
+                </mat-menu>
+            </mat-list-item>
+
+            <mat-list-item class="{{contractRouteStyle}}" routerLink="/">
+                <button mat-button [matMenuTriggerFor]="communityMenu">Community</button>
+                <mat-menu #communityMenu="matMenu">
+                    <button mat-menu-item>Forum</button>
+                    <button mat-menu-item>Twitter</button>
+                    <button mat-menu-item>Discord</button>
+                </mat-menu>
+            </mat-list-item>
+
+            <mat-list-item class="{{contractRouteStyle}}" routerLink="/">
+                <button mat-button [matMenuTriggerFor]="partnerMenu">Partners</button>
+                <mat-menu #partnerMenu="matMenu">
+                    <button mat-menu-item>Current Partners</button>
+                    <button mat-menu-item>Collaboration</button>
+                </mat-menu>
+            </mat-list-item>
+
+            <mat-list-item class="{{contractRouteStyle}}" routerLink="/">
+                <button mat-button>Whitepaper</button>
+            </mat-list-item>
+
+            <mat-list-item class="{{contractRouteStyle}}" routerLink="/">
                 DeFi Token Aave
             </mat-list-item>
 
